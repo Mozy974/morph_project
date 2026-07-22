@@ -40,6 +40,7 @@ from orchestrator.agents.ultimate_cognitive_repair import UltimateCognitiveRepai
 from orchestrator.agents.absolute_ethics_engine import AbsoluteEthicsEngine
 from orchestrator.agents.instant_symbiotic_interface import InstantSymbioticInterface
 from orchestrator.agents.intent_sentiment_classifier import IntentSentimentClassifier
+from orchestrator.agents.juridical_agent import JuridicalAgent
 
 __all__ = [
     "AgentEclaireur",
@@ -80,5 +81,7 @@ __all__ = [
     "AbsoluteEthicsEngine",
     "InstantSymbioticInterface",
     "IntentSentimentClassifier",
+    "JuridicalAgent",
 ]
+
 

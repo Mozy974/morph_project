@@ -48,6 +48,12 @@ class IntentSentimentClassifier:
         "INTENT_ANALYSIS": [
             r"\banalyse\b", r"\bauditer\b", r"\bperformance\b", r"\bmetrics\b", r"\bmétriques\b",
             r"\bstatistiques\b", r"\bdiagnostic\b", r"\baudit\b", r"\banálisis\b", r"\bestadísticas\b"
+        ],
+        "INTENT_FINANCE": [
+            r"\bpib\b", r"\bgdp\b", r"\bfinancier\b", r"\bfinance\b", r"\bbudget\b", r"\beuro\b", r"\bdollar\b"
+        ],
+        "INTENT_LEGAL": [
+            r"\bcontrat\b", r"\brgpd\b", r"\bjuridique\b", r"\blegal\b", r"\bcompliance\b", r"\bconformité\b"
         ]
     }
 
@@ -61,7 +67,9 @@ class IntentSentimentClassifier:
         "INTENT_CODE": 3600,       # 1 heure
         "INTENT_RESEARCH": 86400,  # 24 heures
         "INTENT_DOC": 43200,       # 12 heures
-        "INTENT_ANALYSIS": 1800    # 30 minutes
+        "INTENT_ANALYSIS": 1800,    # 30 minutes
+        "INTENT_FINANCE": 43200,
+        "INTENT_LEGAL": 86400
     }
 
     PII_REGEXES = [
@@ -215,8 +223,11 @@ class IntentSentimentClassifier:
             "INTENT_CODE": "AgentCodeur",
             "INTENT_RESEARCH": "AgentEclaireur",
             "INTENT_DOC": "AgentRedacteur",
-            "INTENT_ANALYSIS": "AgentAnalyste"
+            "INTENT_ANALYSIS": "AgentAnalyste",
+            "INTENT_FINANCE": "AnalysteFinancier",
+            "INTENT_LEGAL": "AgentJuridique"
         }
+
 
         target_agent = target_agent_map.get(best_intent, "AgentCodeur")
 
