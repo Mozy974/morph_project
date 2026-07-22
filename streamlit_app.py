@@ -170,9 +170,22 @@ if nav_option == "📊 Dashboard Swarm & Métriques":
                 tooltip=["Timestamp:T", "Agent:N", "Latence (ms):Q"]
             )
             .properties(height=350)
+            .configure_axis(
+                labelColor="#F8FAFC",
+                titleColor="#F8FAFC",
+                gridColor="#334155"
+            )
+            .configure_legend(
+                labelColor="#F8FAFC",
+                titleColor="#F8FAFC"
+            )
+            .configure_view(
+                strokeWidth=0
+            )
             .interactive()
         )
         st.altair_chart(line_chart, width="stretch")
+
 
     with col_chart2:
         st.subheader("🛡️ État des Invariants & Concurrence")
@@ -372,11 +385,39 @@ elif nav_option == "⚙️ Configuration & Logs SRE":
         with st.container(border=True):
             slack_url = st.text_input("Webhook Slack", value=get_secret("SLACK_WEBHOOK_URL") or "", placeholder="https://hooks.slack.com/services/...")
             discord_url = st.text_input("Webhook Discord", value=get_secret("DISCORD_WEBHOOK_URL") or "", placeholder="https://discord.com/api/webhooks/...")
+            
             if st.button("Envoyer une notification de test", icon=":material/send:"):
-                if slack_url or discord_url:
-                    st.success("✅ Notification de test envoyée avec succès sur les canaux configurés !")
+                if not (slack_url or discord_url):
+                    st.warning("⚠️ Veuillez renseigner au moins un Webhook Slack ou Discord.")
                 else:
-                    st.warning("⚠️ Renseignez au moins un Webhook Slack ou Discord.")
+                    import requests
+                    sent_any = False
+                    test_payload_text = "🚀 **[SuperAgent Morph]** Notification de test SRE : Le système est 100% opérationnel (Level 13.0)."
+
+                    # Test Slack
+                    if slack_url:
+                        try:
+                            res = requests.post(slack_url, json={"text": test_payload_text}, timeout=5)
+                            if res.status_code in [200, 204]:
+                                st.success("✅ Slack Notification livrée avec succès (Status 200) !")
+                                sent_any = True
+                            else:
+                                st.error(f"❌ Échec Slack (Status {res.status_code}) : {res.text}")
+                        except Exception as e:
+                            st.error(f"❌ Erreur de connexion Slack : {e}")
+
+                    # Test Discord
+                    if discord_url:
+                        try:
+                            res = requests.post(discord_url, json={"content": test_payload_text}, timeout=5)
+                            if res.status_code in [200, 204]:
+                                st.success("✅ Discord Notification livrée avec succès (Status 204) !")
+                                sent_any = True
+                            else:
+                                st.error(f"❌ Échec Discord (Status {res.status_code}) : {res.text}")
+                        except Exception as e:
+                            st.error(f"❌ Erreur de connexion Discord : {e}")
+
 
 
     with tab_sre:

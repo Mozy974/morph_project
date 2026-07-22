@@ -55,6 +55,18 @@ An enterprise-grade autonomous AI engineering agent framework powered by **True 
 - Event-driven architecture using Redis Pub/Sub channels (`channel:{job_id}`).
 - FastAPI streams real-time step-by-step progress to the web client via `GET /stream/{job_id}` Server-Sent Events (SSE).
 
+### 6. Profils des Agents Swarm (SuperAgent Morph Level 13.0)
+
+| Agent | Icône | Rôle & Responsabilités Précises |
+| :--- | :---: | :--- |
+| **Agent Codeur** | 💻 | Développement logiciel, génération de code Python TDD, refactoring et résolution de bugs. |
+| **Agent Scribe** | 📝 | Documentation technique, rédaction de spécifications, synthèses et logs SRE. |
+| **Agent Éclaireur** | 🔍 | Recherche web (Tavily/DuckDuckGo), discovery et analyse comparative. |
+| **Analyste Financier** | 📈 | Analyse économique, agrégation des métriques PIB Banque Mondiale et modélisation de tendances. |
+| **Meta-Consciousness** | 👑 | Orchestration multi-agents, vote émotionnel, arbitrage et application des invariants éthiques immuables. |
+
+---
+
 ### 5. Full Observability & Stress-Testing Stack
 - Native Prometheus metrics exposed on `GET /metrics` (`superagent_tasks_total`, `superagent_active_jobs`, `superagent_pytest_results`, `superagent_task_duration_seconds`).
 - Integrated **Prometheus** (Port `9091`) and **Grafana** (Port `3001`).
