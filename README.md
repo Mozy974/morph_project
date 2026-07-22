@@ -14,24 +14,47 @@ An enterprise-grade autonomous AI engineering agent framework powered by **True 
 
 ## 🏗️ System Architecture
 
+```mermaid
+graph TD
+    Client["🌐 Frontend Streamlit / Web UI (Streamlit Cloud)"] --> Router["🧠 IntentSentimentClassifier (< 1ms CPU)"]
+    
+    subgraph Cache Stratifié
+        L1["Cache L1: Mémoire Locale (lru_cache)"]
+        L2["Cache L2: Redis Persistent"]
+    end
+    
+    Router --> Cache Stratifié
+    Router --> Orchestrator["👑 Swarm Orchestrator & LangGraph (Level 13.0)"]
+    
+    subgraph Swarm Specialized Agents
+        Codeur["💻 Agent Codeur (TDD & Pytest)"]
+        Scribe["📝 Agent Scribe (Docs & Logs)"]
+        Eclaireur["🔍 Agent Éclaireur (Tavily/Web)"]
+        Financier["📈 Analyste Financier (World Bank GDP)"]
+        Ethics["👑 Meta-Consciousness (Ethics & Invariants)"]
+    end
+    
+    Orchestrator --> Codeur
+    Orchestrator --> Scribe
+    Orchestrator --> Eclaireur
+    Orchestrator --> Financier
+    Orchestrator --> Ethics
+    
+    Orchestrator --> RAG["📚 Base RAG ChromaDB (mistral-embed)"]
+    
+    subgraph Observabilité & SRE
+        Prometheus["📊 Prometheus Metrics (/metrics)"]
+        Grafana["📉 Grafana Dashboard (Mission Control)"]
+        Notifiers["📢 Webhooks (Slack / Discord)"]
+        RGPD["🛡️ Audit RGPD (Purge 30j & Lock fcntl)"]
+    end
+    
+    Orchestrator --> Prometheus
+    Prometheus --> Grafana
+    Orchestrator --> Notifiers
+    Orchestrator --> RGPD
 ```
-                    ┌─────────────────────────────────────────────────────────────┐
-                    │ 🌐 FastAPI Web Client / SSE Dashboard (http://localhost:8000)│
-                    └──────────────────────────────┬──────────────────────────────┘
-                                                   │
-                                                   ▼
-┌──────────────────────┐    ┌─────────────────────────────────────────────┐    ┌──────────────────────┐
-│  Prometheus Server   │◀───│      LangGraph Orchestrator & Celery        │───▶│   Grafana Dashboard  │
-│ (Metrics Scrape 5s)  │    │ 🔍 Éclaireur ➔ 📊 Analyste (QA)             │    │ (Observabilité Live) │
-└──────────────────────┘    │ 💻 Codeur Dev ➔ ✍️ Rédacteur ➔ 🧠 Distillat │    └──────────────────────┘
-                            └──────────────────────┬──────────────────────┘
-                                                   │
-                                                   ▼ (Sceau SHA-256)
-                            ┌─────────────────────────────────────────────┐
-                            │    🧪 Pytest Multi-File Sandbox Isolated    │
-                            │        (pytest -v --tb=short)               │
-                            └─────────────────────────────────────────────┘
-```
+
 
 ---
 

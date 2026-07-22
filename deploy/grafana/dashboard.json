@@ -1,0 +1,58 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "title": "Swarm Active Agents & Tasks Routed",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "superagent_classifier_routed_total", "legendFormat": "Total Routé" }
+      ]
+    },
+    {
+      "title": "Cache Hit Ratio (%)",
+      "type": "gauge",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 100,
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 80 },
+              { "color": "green", "value": 90 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        { "expr": "superagent_classifier_cache_hit_ratio * 100", "legendFormat": "Hit Ratio" }
+      ]
+    },
+    {
+      "title": "Latence L1 Cache (ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "targets": [
+        { "expr": "rate(superagent_task_duration_seconds_sum[5m]) / rate(superagent_task_duration_seconds_count[5m]) * 1000", "legendFormat": "Latence L1" }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["superagent", "morph", "sre"],
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "SuperAgent Morph — Mission Control Dashboard"
+}

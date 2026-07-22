@@ -1,0 +1,29 @@
+groups:
+  - name: superagent_morph_alerts
+    rules:
+      - alert: LowCacheHitRatio
+        expr: superagent_classifier_cache_hit_ratio < 0.80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taux de Hit Cache inférieur à 80%"
+          description: "Le ratio de cache hit du classifieur est tombé sous 80% depuis plus de 5 minutes (Valeur actuelle: {{ $value }})."
+
+      - alert: HighL1Latency
+        expr: superagent_l1_latency_ms > 10
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Latence L1 Cache supérieure à 10ms"
+          description: "La latence du cache mémoire L1 dépasse le seuil SLA de 10ms depuis plus de 10 minutes."
+
+      - alert: RGPDLockFailure
+        expr: superagent_rgpd_purge_failures_total > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Échec de purge ou de verrouillage RGPD"
+          description: "Un échec d'acquisition de verrou de purge RGPD ou une tentative de purge corrompue a été détecté."
