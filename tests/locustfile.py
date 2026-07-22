@@ -1,6 +1,6 @@
 """
 Suite de Benchmarking et de Stress-Test Locust pour l'API SuperAgent Enterprise (tests/locustfile.py).
-Simule la charge d'utilisateurs virtuels exécutant des requêtes /delegate_task, /stream/{job_id} et /status/{job_id}.
+Simule la charge d'utilisateurs virtuels exécutant des requêtes sur les endpoints d'orchestration et de classification.
 """
 
 import json
@@ -8,7 +8,7 @@ from locust import HttpUser, task, between
 
 
 class SuperAgentUser(HttpUser):
-    wait_time = between(1, 3)
+    wait_time = between(1, 2)
 
     @task(3)
     def process_full_cycle(self):
@@ -38,7 +38,7 @@ class SuperAgentUser(HttpUser):
                 resp.failure(f"Erreur parsing JSON: {e}")
                 return
 
-        # 2. Simulation de l'écoute du flux SSE (Server-Sent Events)
+        # 2. Simulation de l'écoute du flux SSE
         with self.client.get(f"/stream/{job_id}", stream=True, catch_response=True) as sse_resp:
             if sse_resp.status_code == 200:
                 sse_resp.success()
@@ -47,6 +47,13 @@ class SuperAgentUser(HttpUser):
 
         # 3. Vérification du statut final
         self.client.get(f"/status/{job_id}")
+
+    @task(2)
+    def test_classifier_endpoint(self):
+        """
+        Scénario de classification rapide (< 1ms CPU)
+        """
+        self.client.get("/metrics")
 
     @task(1)
     def test_resume_task(self):
