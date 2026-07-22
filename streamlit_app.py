@@ -383,40 +383,40 @@ elif nav_option == "⚙️ Configuration & Logs SRE":
 
         st.subheader("📢 Integrations & Notifications (Webhooks)")
         with st.container(border=True):
-            slack_url = st.text_input("Webhook Slack", value=get_secret("SLACK_WEBHOOK_URL") or "", placeholder="https://hooks.slack.com/services/...")
-            discord_url = st.text_input("Webhook Discord", value=get_secret("DISCORD_WEBHOOK_URL") or "", placeholder="https://discord.com/api/webhooks/...")
+            raw_slack = get_secret("SLACK_WEBHOOK_URL") or ""
+            raw_discord = get_secret("DISCORD_WEBHOOK_URL") or ""
+
+            slack_url = st.text_input("Webhook Slack", value=raw_slack, placeholder="https://hooks.slack.com/services/...")
+            discord_url = st.text_input("Webhook Discord", value=raw_discord, placeholder="https://discord.com/api/webhooks/...")
             
+            # Affichage obscurci sécurisé
+            if slack_url:
+                st.caption(f"🔒 Slack URL Obscurcie : `{slack_url[:25]}.../*******`")
+            if discord_url:
+                st.caption(f"🔒 Discord URL Obscurcie : `{discord_url[:28]}.../*******`")
+
             if st.button("Envoyer une notification de test", icon=":material/send:"):
                 if not (slack_url or discord_url):
                     st.warning("⚠️ Veuillez renseigner au moins un Webhook Slack ou Discord.")
                 else:
-                    import requests
-                    sent_any = False
                     test_payload_text = "🚀 **[SuperAgent Morph]** Notification de test SRE : Le système est 100% opérationnel (Level 13.0)."
 
                     # Test Slack
                     if slack_url:
-                        try:
-                            res = requests.post(slack_url, json={"text": test_payload_text}, timeout=5)
-                            if res.status_code in [200, 204]:
-                                st.success("✅ Slack Notification livrée avec succès (Status 200) !")
-                                sent_any = True
-                            else:
-                                st.error(f"❌ Échec Slack (Status {res.status_code}) : {res.text}")
-                        except Exception as e:
-                            st.error(f"❌ Erreur de connexion Slack : {e}")
+                        from orchestrator.notifier import send_slack_notification
+                        if send_slack_notification(test_payload_text, slack_url):
+                            st.success("✅ Slack Notification livrée avec succès (Status 200) !")
+                        else:
+                            st.error("❌ Échec de livraison de la notification Slack.")
 
                     # Test Discord
                     if discord_url:
-                        try:
-                            res = requests.post(discord_url, json={"content": test_payload_text}, timeout=5)
-                            if res.status_code in [200, 204]:
-                                st.success("✅ Discord Notification livrée avec succès (Status 204) !")
-                                sent_any = True
-                            else:
-                                st.error(f"❌ Échec Discord (Status {res.status_code}) : {res.text}")
-                        except Exception as e:
-                            st.error(f"❌ Erreur de connexion Discord : {e}")
+                        from orchestrator.notifier import send_discord_notification
+                        if send_discord_notification(test_payload_text, discord_url):
+                            st.success("✅ Discord Notification livrée avec succès (Status 204) !")
+                        else:
+                            st.error("❌ Échec de livraison de la notification Discord.")
+
 
 
 

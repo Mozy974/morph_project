@@ -6,7 +6,45 @@ Envoie des alertes en temps réel sur les événements clés du SuperAgent.
 import os
 import json
 import urllib.request
+import requests
 from typing import Dict, Any, Optional
+
+
+def obfuscate_url(url: str) -> str:
+    """Masque partiellement les URLs sensibles de webhooks."""
+    if not url or len(url) < 20:
+        return url
+    parts = url.split("/")
+    if len(parts) >= 4:
+        domain = "/".join(parts[:4])
+        return f"{domain}/.../*******"
+    return url[:15] + ".../*******"
+
+
+def send_slack_notification(message: str, webhook_url: Optional[str] = None) -> bool:
+    """Envoie une notification vers un Webhook Slack."""
+    target_url = webhook_url or os.getenv("SLACK_WEBHOOK_URL", "")
+    if not target_url:
+        return False
+    try:
+        res = requests.post(target_url, json={"text": message}, timeout=5)
+        return res.status_code in [200, 204]
+    except Exception as e:
+        print(f"[Notifier] ❌ Échec Slack : {e}")
+        return False
+
+
+def send_discord_notification(message: str, webhook_url: Optional[str] = None) -> bool:
+    """Envoie une notification vers un Webhook Discord."""
+    target_url = webhook_url or os.getenv("DISCORD_WEBHOOK_URL", "")
+    if not target_url:
+        return False
+    try:
+        res = requests.post(target_url, json={"content": message}, timeout=5)
+        return res.status_code in [200, 204]
+    except Exception as e:
+        print(f"[Notifier] ❌ Échec Discord : {e}")
+        return False
 
 
 class NotificationManager:
@@ -18,7 +56,6 @@ class NotificationManager:
         Envoie une notification formatée vers un webhook (Slack, Discord ou Webhook générique).
         """
         if not self.webhook_url:
-            # Mode silencieux si aucun webhook n'est configuré
             return False
 
         payload = {
@@ -28,7 +65,6 @@ class NotificationManager:
             "metadata": metadata or {}
         }
 
-        # Détection du format (Discord vs Slack/Generic)
         if "discord.com" in self.webhook_url:
             formatted_payload = {
                 "embeds": [{
@@ -42,7 +78,6 @@ class NotificationManager:
                 }]
             }
         else:
-            # Format Slack / Generic Webhook
             formatted_payload = payload
 
         try:
@@ -54,7 +89,7 @@ class NotificationManager:
                 method="POST"
             )
             with urllib.request.urlopen(req, timeout=5) as resp:
-                print(f"[Notifier] 🔔 Notification envoyée avec succès (Status: {resp.status})")
+                print(f"[Notifier] 🔔 Notification envoyée avec succès à {obfuscate_url(self.webhook_url)} (Status: {resp.status})")
                 return True
         except Exception as e:
             print(f"[Notifier] ⚠️ Échec de l'envoi de la notification Webhook : {e}")
