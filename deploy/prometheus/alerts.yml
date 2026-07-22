@@ -1,6 +1,16 @@
 groups:
-  - name: superagent_slo_alerts
+  - name: superagent_slo_and_security_alerts
     rules:
+      - alert: SuspiciousAccessAttemptDetected
+        expr: sum(increase(superagent_suspicious_access_attempts_total[5m])) > 0
+        for: 0m
+        labels:
+          severity: critical
+          security: high
+        annotations:
+          summary: "Tentative d'accès suspecte détectée"
+          description: "Une ou plusieurs tentatives d'accès avec jeton invalide, expiré ou signature altérée ont été bloquées."
+
       - alert: SLO_Latency_Breach
         expr: histogram_quantile(0.99, rate(superagent_task_duration_seconds_bucket[5m])) > 0.010
         for: 2m
