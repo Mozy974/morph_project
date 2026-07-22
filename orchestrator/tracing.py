@@ -1,10 +1,10 @@
 """
-Module Tracing Distribué OpenTelemetry / Grafana Tempo (orchestrator/tracing.py).
-Permet de tracer les requêtes entre les différents composants du Swarm.
+Module Tracing Distribué OpenTelemetry / Grafana Tempo avec Spans Personnalisés & Log Integration (orchestrator/tracing.py).
 """
 
 import os
-from typing import Optional
+import logging
+from typing import Optional, Dict, Any
 
 try:
     from opentelemetry import trace
@@ -14,6 +14,8 @@ try:
     HAS_OTEL = True
 except ImportError:
     HAS_OTEL = False
+
+logger = logging.getLogger("superagent.tracing")
 
 
 def setup_telemetry(service_name: str = "superagent-orchestrator", endpoint: Optional[str] = None):
@@ -39,4 +41,28 @@ def setup_telemetry(service_name: str = "superagent-orchestrator", endpoint: Opt
 def get_tracer(module_name: str = "orchestrator"):
     if HAS_OTEL:
         return trace.get_tracer(module_name)
+    return None
+
+
+def get_current_trace_id() -> str:
+    """Retourne l'ID de la trace courante pour corréler avec les logs SRE."""
+    if HAS_OTEL:
+        span = trace.get_current_span()
+        if span and span.get_span_context():
+            return f"{span.get_span_context().trace_id:032x}"
+    return "00000000000000000000000000000000"
+
+
+def trace_rag_query(query: str, db_system: str = "chromadb"):
+    """Génère un span personnalisé pour une requête RAG vectorielle."""
+    tracer = get_tracer("rag")
+    if tracer:
+        return tracer.start_as_current_span(
+            "rag_query",
+            attributes={
+                "db.system": db_system,
+                "db.query": "similarity_search",
+                "rag.input_length": len(query)
+            }
+        )
     return None
