@@ -86,9 +86,11 @@ graph TD
 | **Agent Scribe** | 📝 | Documentation technique, synthèses & logs SRE | Markdown, Python |
 | **Agent Éclaireur** | 🔍 | Recherche web & discovery comparatif | Tavily API, DuckDuckGo |
 | **Analyste Financier** | 📈 | Analyse macroéconomique (PIB, tendances) | Banque Mondiale API, Pandas |
+| **Agent Juridique** | ⚖️ | Audit de conformité RGPD, contrats & verrous | fcntl, AES-256 |
 | **Meta-Consciousness** | 👑 | Arbitrage éthique et orchestration Swarm | Vote pondéré, RGPD Invariants |
 
 > **Note** : Tous les agents respectent les **invariants de sécurité** (ex : suppression des données sensibles après 30 jours et chiffrement AES-256).
+
 
 
 ---

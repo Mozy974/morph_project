@@ -224,10 +224,11 @@ elif nav_option == "💬 Chat Multi-Agent":
     with col_agent:
         selected_agent = st.selectbox(
             "Agent Destinataire",
-            options=["💻 Agent Codeur", "📝 Agent Scribe", "🔍 Agent Éclaireur", "📈 Analyste Financier", "👑 Meta-Consciousness"],
+            options=["💻 Agent Codeur", "📝 Agent Scribe", "🔍 Agent Éclaireur", "📈 Analyste Financier", "⚖️ Agent Juridique", "👑 Meta-Consciousness"],
             index=0
         )
         st.session_state.active_agent = selected_agent
+
 
 
     with col_clear:
