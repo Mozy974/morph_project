@@ -1,0 +1,21 @@
+name: OWASP ZAP Security DAST Scan
+
+on:
+  schedule:
+    - cron: '0 2 * * 0' # Scan hebdomadaire le dimanche à 02:00
+  workflow_dispatch:
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: DAST Security Scan
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:8000'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'

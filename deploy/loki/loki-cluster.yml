@@ -1,0 +1,35 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+
+memberlist:
+  join_members:
+    - loki-read:7946
+    - loki-write:7946
+
+ingester:
+  lifecycler:
+    join_after: 0s
+    ring:
+      kvstore:
+        store: memberlist
+      replication_factor: 2
+  chunk_idle_period: 1m
+  max_chunk_age: 1h
+  chunk_target_size: 1048576
+
+schema_config:
+  configs:
+    - from: 2020-05-15
+      store: tsdb
+      object_store: s3
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+limits_config:
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
