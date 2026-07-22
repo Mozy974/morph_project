@@ -10,17 +10,9 @@
   "liveNow": false,
   "panels": [
     {
-      "title": "Swarm Active Agents & Tasks Routed",
-      "type": "stat",
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
-      "targets": [
-        { "expr": "superagent_classifier_routed_total", "legendFormat": "Total Routé" }
-      ]
-    },
-    {
-      "title": "Cache Hit Ratio (%)",
+      "title": "Cache Hit Ratio",
       "type": "gauge",
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
       "fieldConfig": {
         "defaults": {
           "min": 0,
@@ -37,22 +29,46 @@
         }
       },
       "targets": [
-        { "expr": "superagent_classifier_cache_hit_ratio * 100", "legendFormat": "Hit Ratio" }
+        { "expr": "avg(rate(cache_hits_total[5m])) / (avg(rate(cache_hits_total[5m])) + avg(rate(cache_misses_total[5m]))) * 100", "legendFormat": "Cache Hit Ratio (%)" }
       ]
     },
     {
-      "title": "Latence L1 Cache (ms)",
-      "type": "timeseries",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "title": "Webhook Latency (p95)",
+      "type": "heatmap",
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
       "targets": [
-        { "expr": "rate(superagent_task_duration_seconds_sum[5m]) / rate(superagent_task_duration_seconds_count[5m]) * 1000", "legendFormat": "Latence L1" }
+        { "expr": "histogram_quantile(0.95, rate(webhook_request_duration_seconds_bucket[5m]))", "legendFormat": "p95 Latency" }
+      ]
+    },
+    {
+      "title": "L1 Cache Size",
+      "type": "bargauge",
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 0 },
+      "targets": [
+        { "expr": "cache_l1_size", "legendFormat": "Taille Cache L1" }
+      ]
+    },
+    {
+      "title": "RGPD Lock Status",
+      "type": "state-timeline",
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 6 },
+      "targets": [
+        { "expr": "rgpd_lock_status", "legendFormat": "Verrou (1=Acquis, 0=Inactif)" }
+      ]
+    },
+    {
+      "title": "Agent Error Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 6 },
+      "targets": [
+        { "expr": "rate(agent_errors_total[5m])", "legendFormat": "Taux d'erreur" }
       ]
     }
   ],
   "refresh": "5s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["superagent", "morph", "sre"],
+  "tags": ["superagent", "morph", "sre", "production"],
   "time": { "from": "now-1h", "to": "now" },
-  "title": "SuperAgent Morph — Mission Control Dashboard"
+  "title": "SuperAgent Morph — Mission Control Dashboard (Full 5-Panel SRE)"
 }

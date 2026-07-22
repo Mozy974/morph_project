@@ -7,8 +7,8 @@ on:
     branches: [ main, master ]
 
 jobs:
-  test:
-    name: Pytest & Multi-Version Matrix Validation
+  test-and-monitor:
+    name: Pytest Suite, Locust Benchmarks & Tracing CI
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,7 +28,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest-cov bandit
+          pip install pytest-cov bandit locust
 
       - name: Security Linting (Bandit)
         run: |
@@ -45,8 +45,14 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      - name: Upload Coverage Artifact
+      - name: Generate Automated SRE Weekly Report
+        run: |
+          python scripts/generate_sre_report.py
+
+      - name: Upload Coverage & SRE Report Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-python-${{ matrix.python-version }}
-          path: coverage.xml
+          name: sre-artifacts-python-${{ matrix.python-version }}
+          path: |
+            coverage.xml
+            sre_weekly_report.md
