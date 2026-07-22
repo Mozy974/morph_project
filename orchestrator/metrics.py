@@ -73,6 +73,14 @@ CLASSIFIER_CACHE_HIT_RATIO = Gauge(
     "Ratio de requêtes servies depuis le cache d'intentions"
 )
 
+# Compteur Prometheus de coût estimé des requêtes LLM en USD
+CLASSIFIER_QUERY_COST_USD = Counter(
+    "superagent_classifier_query_cost_usd",
+    "Coût cumulé estimé des requêtes LLM en USD",
+    ["model"]
+)
+
+
 
 
 

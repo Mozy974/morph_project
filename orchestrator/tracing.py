@@ -1,14 +1,15 @@
 """
-Module Tracing Distribué OpenTelemetry / Grafana Tempo avec Spans Personnalisés & Log Integration (orchestrator/tracing.py).
+Module Tracing Distribué OpenTelemetry / Grafana Tempo avec Sampling Adaptatif & Spans Personnalisés (orchestrator/tracing.py).
 """
 
 import os
 import logging
-from typing import Optional, Dict, Any
+from typing import Optional
 
 try:
     from opentelemetry import trace
     from opentelemetry.sdk.trace import TracerProvider
+    from opentelemetry.sdk.trace.sampling import ParentBased, TraceIdRatioBased
     from opentelemetry.sdk.trace.export import BatchSpanProcessor
     from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
     HAS_OTEL = True
@@ -18,8 +19,8 @@ except ImportError:
 logger = logging.getLogger("superagent.tracing")
 
 
-def setup_telemetry(service_name: str = "superagent-orchestrator", endpoint: Optional[str] = None):
-    """Initialise le TracerProvider OpenTelemetry connecté à Grafana Tempo."""
+def setup_telemetry(service_name: str = "superagent-orchestrator", endpoint: Optional[str] = None, sample_rate: float = 0.1):
+    """Initialise le TracerProvider OpenTelemetry avec Sampling Adaptatif (ratio 10%)."""
     if not HAS_OTEL:
         print("[Tracing] ⚠️ OpenTelemetry SDK non disponible. Tracing désactivé.")
         return None
@@ -27,11 +28,14 @@ def setup_telemetry(service_name: str = "superagent-orchestrator", endpoint: Opt
     target_endpoint = endpoint or os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317")
     
     try:
-        provider = TracerProvider()
+        # Sampling Adaptatif : 10% par défaut en production pour réduire les coûts
+        sampler = ParentBased(root=TraceIdRatioBased(sample_rate))
+        provider = TracerProvider(sampler=sampler)
+        
         processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=target_endpoint, insecure=True))
         provider.add_span_processor(processor)
         trace.set_tracer_provider(provider)
-        print(f"[Tracing] 📡 Tracing OpenTelemetry actif vers {target_endpoint}")
+        print(f"[Tracing] 📡 Tracing OpenTelemetry actif vers {target_endpoint} (Sampling adaptatif: {sample_rate*100}%)")
         return trace.get_tracer(service_name)
     except Exception as e:
         print(f"[Tracing] ⚠️ Impossible d'initialiser OpenTelemetry : {e}")
