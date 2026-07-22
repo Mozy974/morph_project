@@ -1,0 +1,139 @@
+services:
+  # 1. Base de données relationnelle
+  db:
+    image: postgres:15-alpine
+    container_name: orchestrator_db
+    restart: always
+    environment:
+      POSTGRES_USER: orchestrator_user
+      POSTGRES_PASSWORD: super_secret_password
+      POSTGRES_DB: orchestrator_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orchestrator_user -d orchestrator_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Message Broker & Event Bus
+  redis:
+    image: redis:7-alpine
+    container_name: orchestrator_redis
+    restart: always
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # 3. LLM Local (Ollama) — partage les modèles avec l'instance hôte
+  ollama:
+    image: ollama/ollama:latest
+    container_name: orchestrator_ollama
+    restart: always
+    volumes:
+      - /home/mozy/.ollama:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_NUM_PARALLEL=4
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list 2>/dev/null || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # 4. API Frontale (FastAPI) — Production : Gunicorn + Uvicorn workers
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orchestrator_api
+    restart: always
+    command: sh -c "rm -rf /tmp/prometheus_multiproc_dir && mkdir -p /tmp/prometheus_multiproc_dir && gunicorn orchestrator.api:app -w 2 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - POSTGRES_URL=db+postgresql://orchestrator_user:super_secret_password@db:5432/orchestrator_db
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus_multiproc_dir
+      - OLLAMA_BASE_URL=http://172.17.0.1:11434
+      - LLM_PROVIDER=${LLM_PROVIDER:-mistral}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+
+  # 4. Worker de traitement en arrière-plan (Celery) — Production : concurrency + fair scheduling
+  celery_worker:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: orchestrator_worker
+    restart: always
+    command: celery -A orchestrator.celery_app worker --loglevel=info --concurrency=2 -O fair
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - POSTGRES_URL=db+postgresql://orchestrator_user:super_secret_password@db:5432/orchestrator_db
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - OLLAMA_BASE_URL=http://172.17.0.1:11434
+      - LLM_PROVIDER=${LLM_PROVIDER:-mistral}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+
+  # 5. Prometheus - Collecteur de Métriques
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: orchestrator_prometheus
+    restart: always
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9091:9090"
+    depends_on:
+      - api
+
+  # 6. Grafana - Tableaux de Bord & Observabilité
+  grafana:
+    image: grafana/grafana:latest
+    container_name: orchestrator_grafana
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=superagent
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+# Définition des volumes persistants
+volumes:
+  pgdata:
+  redisdata:
+  grafana_data:

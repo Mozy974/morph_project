@@ -1,0 +1,1144 @@
+{
+  "version": "2.0",
+  "exported": "2026-07-16T19:15:06Z",
+  "source": "VOANH",
+  "data": {
+    "chats": [],
+    "agents": [],
+    "global_memory": [
+      {
+        "id": "da8720f6-c7b7-48bd-933e-61dfd45d2428",
+        "content": "Q: Quelle est la capitale de la France ?\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "capitale",
+          "quelle",
+          "france"
+        ],
+        "created": 1784218344718,
+        "importance": 1
+      },
+      {
+        "id": "f815fefb-8f2f-4c6c-b6d0-0c826a1123f4",
+        "content": "Q: Explique le théorème de Pythagore en une phrase\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "phrase",
+          "théorème",
+          "explique"
+        ],
+        "created": 1784220830252,
+        "importance": 1
+      },
+      {
+        "id": "2f10c611-2eca-4f16-992b-448f8d312334",
+        "content": "Q: Donne une recette de pancakes en 3 étapes\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "pancakes",
+          "recette",
+          "donne"
+        ],
+        "created": 1784222826507,
+        "importance": 1
+      },
+      {
+        "id": "0976c958-9de4-404d-9ea0-1395dff8f132",
+        "content": "Q: Quelle est la distance entre la Terre et la Lune ?\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "entre",
+          "quelle",
+          "terre"
+        ],
+        "created": 1784223883143,
+        "importance": 1
+      },
+      {
+        "id": "8edf20fb-4c15-4488-b270-ec7d50b2f614",
+        "content": "Q: Explique la photosynthèse simplement\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "simplement",
+          "explique",
+          "photosynthèse"
+        ],
+        "created": 1784224537536,
+        "importance": 1
+      },
+      {
+        "id": "c7091cc6-3f77-402a-8f14-734e9ff2cc74",
+        "content": "Q: Qu'est-ce que l'intelligence artificielle ?\nR: Erreur de génération : HTTP Error 500: Internal Server Error",
+        "tags": [
+          "artificielle",
+          "qu'est-ce",
+          "l'intelligence"
+        ],
+        "created": 1784225186784,
+        "importance": 1
+      },
+      {
+        "id": "1481ffba-3ad3-4604-838d-6163b69feb13",
+        "content": "Q: Donne 5 conseils pour mieux dormir\nR: 1. Limitez les écrans avant le sommeil.\n2. Faites une courte promenade dans la soirée.\n3. Mettez votre chambre en lumière noire.\n4. Essayez de réguler vos horaires de sommeil et de réveil.\n5. Tentez de vous détendre avant le sommeil, par exemple avec des exercices de relaxation ou une lecture intéressante.",
+        "tags": [
+          "dormir",
+          "donne",
+          "conseils"
+        ],
+        "created": 1784226283408,
+        "importance": 1
+      },
+      {
+        "id": "a679d370-c956-4308-b3c3-ad4be12ae574",
+        "content": "Q: Quelle est la plus grande planète du système solaire ?\nR: La plus grande planète du Système solaire est Jupiter.",
+        "tags": [
+          "système",
+          "grande",
+          "planète"
+        ],
+        "created": 1784226308072,
+        "importance": 1
+      },
+      {
+        "id": "037598d6-97dc-41f5-af08-42a43fdc567b",
+        "content": "Q: Explique la différence entre HTTP et HTTPS\nR: HTTP (Hypertext Transfer Protocol) est un protocole d'Internet utilisé pour transmettre des données sur le web. HTTPS (Hypertext Transfer Protocol Secure) est une version sécurisée de HTTP qui utilise SSL/TLS pour protéger les échanges entre l'utilisateur et le serveur, grâce à la cryptographie.",
+        "tags": [
+          "entre",
+          "https",
+          "explique"
+        ],
+        "created": 1784226342551,
+        "importance": 1
+      },
+      {
+        "id": "603681cf-ddfe-4fbe-9c8d-3a01efc38895",
+        "content": "Q: Qu'est-ce que le changement climatique ?\nR: Le changement climatique désigne une augmentation progressive et durable du réchauffement global de la Terre. Il est causé par les émissions humaines de gaz à effet de serre, qui perturbent le système de réchauffement naturel de la planète.",
+        "tags": [
+          "climatique",
+          "qu'est-ce",
+          "changement"
+        ],
+        "created": 1784226365915,
+        "importance": 1
+      },
+      {
+        "id": "53c3cf46-a983-4f12-a866-668631e70223",
+        "content": "Q: Donne une recette de ratatouille\nR: Ratatouille : Faites chauffer une poêle avec de l'huile d'olive, ajoutez des oignons, ail et poivrons coupés. Quand ils sont tendres, ajoutez des tomates, zucchini, courgettes et aubergines coupées en morceaux. Salez et poivrez. Laissez cuire pendant 20 minutes avant d'ajouter de basilic frais haché. Bon appétit !",
+        "tags": [
+          "recette",
+          "donne",
+          "ratatouille"
+        ],
+        "created": 1784226400659,
+        "importance": 1
+      },
+      {
+        "id": "fb6fea77-cce1-4a92-8f73-87a1a61abe40",
+        "content": "Q: Quelle est l'histoire de la Révolution française ?\nR: La Révolution française (1789-1799) a débuté avec les États généraux et aboutit à la chute de la monarchie absolue. Elle a connu des événements clés comme la prise de la Bastille, la Déclaration des Droits de l'Homme et du Citoyen, le régime du Terreur, et la chute de Louis XVI. La Révolution a finalement abouti à la Constitution civile du Clergé et la mise en place du Premier Empire sous Napoléon Bonaparte.",
+        "tags": [
+          "révolution",
+          "française",
+          "quelle"
+        ],
+        "created": 1784226438942,
+        "importance": 1
+      },
+      {
+        "id": "a9cc0073-6793-4871-8b93-86bd3a6dd86f",
+        "content": "Q: Explique ce qu'est un algorithme\nR: Un algorithme est une suite de pas logiques permettant de résoudre un problème ou de traiter des données. Il définit les étapes à suivre pour atteindre un objectif, de manière systématique et automatisée.",
+        "tags": [
+          "explique",
+          "algorithme",
+          "qu'est"
+        ],
+        "created": 1784226457722,
+        "importance": 1
+      },
+      {
+        "id": "f47e70ae-7f5f-4a20-9a25-f1a7f57a7118",
+        "content": "Q: Qu'est-ce que la blockchain ?\nR: La blockchain est une technologie distribuée qui permet l'enregistrement sécurisé et transparente d'informations sur un réseau décentralisé de participants, sans besoin d'un intermédiaire central. Chaque bloc contient plusieurs transactions enregistrées par un consensus entre les participants.",
+        "tags": [
+          "blockchain",
+          "qu'est-ce"
+        ],
+        "created": 1784226479857,
+        "importance": 1
+      },
+      {
+        "id": "e14bd551-6720-432c-8780-04aca660247e",
+        "content": "Q: Donne 5 astuces pour économiser de l'électricité\nR: 1. Utiliser des bulbes à basse consommation LED.\n2. Mettre en place un réglage automatique du thermostat.\n3. Se débarrasser des appareils en veille.\n4. Réduire l'utilisation d'électrodomestiques énergivores (sèche-linge, téléviseur).\n5. Faire preuve de raisonnablement et éviter d'utiliser plusieurs appareils simultanément.",
+        "tags": [
+          "donne",
+          "économiser",
+          "astuces"
+        ],
+        "created": 1784226514664,
+        "importance": 1
+      },
+      {
+        "id": "c5a1d2f4-c7ba-4de3-ab72-0f3c2cca024e",
+        "content": "Q: Quelle est la vitesse de la lumière ?\nR: La vitesse de la lumière dans le vide est de 299 792 km/s.",
+        "tags": [
+          "lumière",
+          "quelle",
+          "vitesse"
+        ],
+        "created": 1784226522347,
+        "importance": 1
+      },
+      {
+        "id": "4ce5f18c-18a3-4155-9593-96da82b97a7c",
+        "content": "Q: Explique la théorie de la relativité simplement\nR: La relativité générale est une théorie physique développée par Einstein en 1915. Elle explique les phénomènes graves en présence de gravitation, comme le mouvement des planètes autour du Soleil ou le fait que la lumière se bends autour du Soleil. Elle relie la gravitation à l'espace-temps distordu par la masse. La relativité restreinte (1905) décrit les phénomènes en présence de vitesses proches ou égales à celle de la lumière, comme le dilatation du temps et le déplacement Lorentz.",
+        "tags": [
+          "simplement",
+          "explique",
+          "théorie"
+        ],
+        "created": 1784226561605,
+        "importance": 1
+      },
+      {
+        "id": "87607858-37b8-49f8-a36e-321c4880aa48",
+        "content": "Q: Qu'est-ce que le quantum computing ?\nR: Le quantum computing est une forme de calcul qui utilise les propriétés quantiques pour résoudre certains problèmes informatiques complexes. Il permet d'effectuer plusieurs calculs simultananément et avec plus de rapidité, grâce à des qubits quantiques.",
+        "tags": [
+          "quantum",
+          "computing",
+          "qu'est-ce"
+        ],
+        "created": 1784226579477,
+        "importance": 1
+      },
+      {
+        "id": "b3abbea0-c2ca-4d20-9840-4b55464a8003",
+        "content": "Q: Donne une recette de mayonnaise maison\nR: Préparez votre mayonnaise à la main : mélangez 2 jaunes d'œufs, 1 cuillère à soupe de vinaigre et 1 tasse d'huile d'olive en ajoutant l'huile progressivement et en battant vigoureusement pour obtenir une consistance onctueuse. Ajoutez sel et poivre selon goût.",
+        "tags": [
+          "recette",
+          "mayonnaise",
+          "donne"
+        ],
+        "created": 1784226605035,
+        "importance": 1
+      },
+      {
+        "id": "608e8d62-5e2a-4671-8cf2-f5d54e2512fa",
+        "content": "Q: Quelle est la capitale du Japon ?\nR: La capitale du Japon est Tokyo.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "japon"
+        ],
+        "created": 1784226608765,
+        "importance": 1
+      },
+      {
+        "id": "e6728032-bed5-43de-aadc-64e9da23af5b",
+        "content": "Q: Explique la différence entre SQL et NoSQL\nR: SQL (Structured Query Language) est une langue de programmation utilisée pour gérer les bases de données relationnelles. Elle permet de définir, manipuler et consulter des données structurées en tables, avec relations entre elles.\n\nNoSQL (Not Only SQL), quant à lui, désigne différents systèmes de gestion de base de données non relationnels, qui offrent une grande flexibilité pour stocker et gérer les données sans structure préétablie ou avec des structures hybrides.",
+        "tags": [
+          "entre",
+          "explique",
+          "nosql"
+        ],
+        "created": 1784226641849,
+        "importance": 1
+      },
+      {
+        "id": "105d7865-61a8-48a2-86ad-cef9d4e6180d",
+        "content": "Q: Qu'est-ce que le machine learning ?\nR: Le machine learning est un sous-domaine de l'intelligence artificielle qui consiste à apprendre automatiquement des données pour effectuer une tâche, sans être explicitement programmé. Il s'agit d'un algorithme qui peut améliorer son aptitude à résoudre un problème en analysant les données.",
+        "tags": [
+          "machine",
+          "qu'est-ce",
+          "learning"
+        ],
+        "created": 1784226664300,
+        "importance": 1
+      },
+      {
+        "id": "d2818c34-4fec-4e74-9e2a-374f95ab9d2e",
+        "content": "Q: Donne 5 conseils pour arrêter de fumer\nR: 1. Déterminez une date d'arrêt prévue et partagez votre intention avec les proches.\n2. Identifiez les moments d'étincelle (ex. apres-déjeuner, apres-repas) et trouvez des alternatives.\n3. Utilisez des stratégies alternatives à l'évitement du tabac tel que la respiration profonde ou la méditation.\n4. Cherchez une soutien social en faisant partie d'une communauté de non-fumeurs ou en consultant un professionnel de santé.\n5. Consommez régulièrement des aliments riches en fibres et vitamines pour aider à lutter contre les envies de tabac.",
+        "tags": [
+          "donne",
+          "conseils",
+          "arrêter"
+        ],
+        "created": 1784226709301,
+        "importance": 1
+      },
+      {
+        "id": "fadea8ce-5ece-43fd-aa7a-a3a8861813c6",
+        "content": "Q: Quelle est la hauteur du Mont Everest ?\nR: La hauteur du Mont Everest est de 8 848,86 mètres.",
+        "tags": [
+          "hauteur",
+          "quelle",
+          "everest"
+        ],
+        "created": 1784226716704,
+        "importance": 1
+      },
+      {
+        "id": "1fa9b827-10db-4b26-bbd1-a94ec1216461",
+        "content": "Q: Explique le Big Bang simplement\nR: Le Big Bang est une théorie cosmologique qui décrit l'origine de l'univers. Elle postule qu'il s'agit d'un événement initial explosif qui a engendré notre univers, il y a environ 13,8 milliards d'années. La matière et les énergies étaient alors concentrées dans un point extrêmement dense et chaud, puis s'étirent pour former l'univers actuel.",
+        "tags": [
+          "simplement",
+          "explique"
+        ],
+        "created": 1784226743861,
+        "importance": 1
+      },
+      {
+        "id": "8c5f72a5-8ee1-4e8d-89af-81c625b30800",
+        "content": "Q: Qu'est-ce que l'effet de serre ?\nR: L'effet de serre est un phénomène atmosphérique qui consiste dans la reprise partielle des rayonnements infrarouges émis par la Terre par certaines molécules (CO2, méthane, oxyde d'azote), ce qui entraîne une augmentation de sa température.",
+        "tags": [
+          "l'effet",
+          "qu'est-ce",
+          "serre"
+        ],
+        "created": 1784226765793,
+        "importance": 1
+      },
+      {
+        "id": "f39ae8e3-1b08-42e7-ac53-0ae14197e7c7",
+        "content": "Q: Donne une recette de tarte aux pommes\nR: Recette de tarte aux pommes : 8 pommes coupées finement, sucre, beurre et farine. Mettre la pâte brisée dans un moule à tarte, enfourner à 200°C. Cuire les pommes avec du sucre jusqu'à caramélisation. Étaler les pommes sur la pâte cuite, badigeonner de beurre fondu et saupoudrer de farine puis enfourner pour 30 minutes à 180°C.",
+        "tags": [
+          "pommes",
+          "recette",
+          "donne"
+        ],
+        "created": 1784226796536,
+        "importance": 1
+      },
+      {
+        "id": "9d7bd572-f974-4a39-8b9c-def7f481581f",
+        "content": "Q: Quelle est la capitale du Brésil ?\nR: La capitale du Brésil est Brasília.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "brésil"
+        ],
+        "created": 1784226800632,
+        "importance": 1
+      },
+      {
+        "id": "b377129b-e6b2-45c2-a114-7fdce6011eeb",
+        "content": "Q: Explique ce qu'est une API\nR: Une API (Application Programming Interface) est un ensemble de règles permettant à des applications de communiquer entre elles ou avec des systèmes externes. Elle définit les mécanismes pour accéder aux fonctionnalités d'une application et échanger des données avec elle, en utilisant des protocoles spécifiques et des formats de données standardisés.",
+        "tags": [
+          "explique",
+          "qu'est"
+        ],
+        "created": 1784226826912,
+        "importance": 1
+      },
+      {
+        "id": "42237a76-11c1-4dff-836f-9c3bd851214b",
+        "content": "Q: Qu'est-ce que le cloud computing ?\nR: Le Cloud computing est un mode d'hébergement informatique où les services et données sont fournis via internet à la demande, plutôt qu'être stockés sur des serveurs locaux. Il offre une flexibilité, une scalabilité et une résilience accrus, tout en réduisant les coûts d'investissement initial et de maintenance.",
+        "tags": [
+          "cloud",
+          "computing",
+          "qu'est-ce"
+        ],
+        "created": 1784226849052,
+        "importance": 1
+      },
+      {
+        "id": "22ce8921-0be1-4264-8b29-49064de0edb3",
+        "content": "Q: Donne 5 astuces pour réduire le stress\nR: 1. Exercices physiques quotidiens\n2. Sommeil de qualité suffisant\n3. Alimentation équilibrée et hydratation\n4. Temps de détente et méditation quotidiens\n5. Limiter les engagements et prioriser l'autocare",
+        "tags": [
+          "réduire",
+          "donne",
+          "stress"
+        ],
+        "created": 1784226868155,
+        "importance": 1
+      },
+      {
+        "id": "316d7ddb-5d97-4aca-8324-2bc7948ca5f0",
+        "content": "Q: Quelle est la durée d'une année sur Mars ?\nR: Une année martienne dure environ deux années terrestres, car Mars tourne autour du Soleil en 687 jours terrestres, mais sa période de rotation est d'un jour solaire terrestre et demi.",
+        "tags": [
+          "année",
+          "quelle",
+          "d'une"
+        ],
+        "created": 1784226883679,
+        "importance": 1
+      },
+      {
+        "id": "dd478975-9740-4171-9a1a-9b865612adc6",
+        "content": "Q: Explique la gravité simplement\nR: La gravité est une force physique qui attire deux corps vers l'un et l'autre. Son effet le plus visible est la pesanteur, c'est-à-dire la force qui pousse tout objet vers le sol. Elle est définie par la loi de Newton : F=m*g avec m (masse) et g (accélération gravitationnelle, environ 9,81 m/s²).",
+        "tags": [
+          "simplement",
+          "explique",
+          "gravité"
+        ],
+        "created": 1784226909177,
+        "importance": 1
+      },
+      {
+        "id": "5bb92449-2774-4cf8-bf28-384cd132e90b",
+        "content": "Q: Qu'est-ce que l'ADN ?\nR: L'ADN (acide désoxyribonucléique) est une molécule constituante du matériel génétique des cellules. Il transporte les informations nécessaires à la vie, notamment la structure des protéines. Sa double hélice est caractéristique de son architecture.",
+        "tags": [
+          "qu'est-ce",
+          "l'adn"
+        ],
+        "created": 1784226927615,
+        "importance": 1
+      },
+      {
+        "id": "d696b631-16a2-4fb2-a98a-a1440c9c190c",
+        "content": "Q: Donne une recette de soupe à l'oignon\nR: Recette simple pour une soupe à l'oignon :\nFaites revenir des oignons émincés dans du beurre, ajoutez du bouillon de volaille et des pommes de terre coupées en dés. Salez et poivrez. Ajoutez de la crème liquide avant de servir (facultatif).",
+        "tags": [
+          "recette",
+          "donne",
+          "soupe"
+        ],
+        "created": 1784226949272,
+        "importance": 1
+      },
+      {
+        "id": "6b685f28-89f5-4b6c-8652-aba1aa9a02c5",
+        "content": "Q: Quelle est la capitale de l'Australie ?\nR: La capitale de l'Australie est Canberra.",
+        "tags": [
+          "l'australie",
+          "capitale",
+          "quelle"
+        ],
+        "created": 1784226953674,
+        "importance": 1
+      },
+      {
+        "id": "bbf621d4-8f86-4456-a997-2dd3c600387e",
+        "content": "Q: Explique la différence entre TCP et UDP\nR: TCP (Transmission Control Protocol) est un protocole réseau qui assure une connexion fiable et ordonnée des données en fournissant des services tels que l'ordonnancement, la séquençage, le contrôle d'erreur et le retransmettage de paquets. UDP (User Datagram Protocol) est un protocole réseau qui ne garantit pas de connexion ni l'ordre des données, se limitant à envoyer les paquets sans vérification ou relecture.",
+        "tags": [
+          "entre",
+          "explique",
+          "différence"
+        ],
+        "created": 1784226986066,
+        "importance": 1
+      },
+      {
+        "id": "fd19a9c5-8975-4a89-b47a-f346bb9e55af",
+        "content": "Q: Qu'est-ce que le deep learning ?\nR: Le deep learning est un sous-domaine de l'apprentissage automatique qui utilise des réseaux de neurones artificiels profonds pour effectuer des tâches de traitement automatisé des données complexes, comme la reconnaissance de images ou la traduction automatique.",
+        "tags": [
+          "qu'est-ce",
+          "learning"
+        ],
+        "created": 1784227002743,
+        "importance": 1
+      },
+      {
+        "id": "88d8f2d0-4d27-42ec-8316-a33c15c8fe02",
+        "content": "Q: Donne 5 conseils pour être productif au travail\nR: 1. Organisation temporelle claire.\n2. Priorisation des tâches en fonction d'importance.\n3. Limiter les distractions.\n4. Utiliser des outils de productivity.\n5. Prendre soin de soi pour maintenir une bonne santé mentale et physique.",
+        "tags": [
+          "travail",
+          "donne",
+          "conseils"
+        ],
+        "created": 1784227023002,
+        "importance": 1
+      },
+      {
+        "id": "62f90fbf-ea3d-43f0-b752-08979fb528b7",
+        "content": "Q: Quelle est la taille de l'univers observable ?\nR: La taille de l'Univers observable varie selon les théories et mesures, mais une estimation courante est que son diamètre est d'environ 93 milliards d'années-lumière. Cette limite est due à la lumière la plus ancienne que nous pouvons voir depuis notre époque actuelle.",
+        "tags": [
+          "taille",
+          "quelle",
+          "observable"
+        ],
+        "created": 1784227043573,
+        "importance": 1
+      },
+      {
+        "id": "ba874d43-17cb-430c-a136-bd142c87ee5e",
+        "content": "Q: Explique ce qu'est un trou noir\nR: Un trou noir est une région de l'espace-temps où la gravité est si intense que rien ne peut s'échapper, y compris la lumière. Formé lorsque des étoiles massives collapsent en se contractant jusqu'à devenir très petites mais extrêmement densifiées, ils sont invisibles car ils n'émittent pas de lumière, mais leur présence peut être détectée par leurs effets gravitationnels sur les astres environnants.",
+        "tags": [
+          "explique",
+          "qu'est"
+        ],
+        "created": 1784227074187,
+        "importance": 1
+      },
+      {
+        "id": "72b86452-30b1-4928-aa66-7ef2821fac06",
+        "content": "Q: Qu'est-ce que l'énergie nucléaire ?\nR: L'énergie nucléaire est l'énergie libérée lorsque des réactions chimiques nucléaires modifient la structure atomique, généralement par fission ou fusion des noyaux d'atomes légers. Cette énergie peut être utilisée pour produire de l'électricité ou pour le développement de bombes atomiques.",
+        "tags": [
+          "nucléaire",
+          "qu'est-ce",
+          "l'énergie"
+        ],
+        "created": 1784227097764,
+        "importance": 1
+      },
+      {
+        "id": "3b415d63-f8eb-4905-8ddd-421f78dfa11c",
+        "content": "Q: Donne une recette de crêpes\nR: Recette de crêpes : 300ml lait, 2 oeufs, 250g farine, 1/2 sachet de sucre vanillé, sel et beurre fondu. Mélanger et laisser reposer 1h, chauffer une poêle à crêpes avec un peu de beurre, verser une louche de batterie, tourner la crêpe. Répéter. Bon appétit !",
+        "tags": [
+          "crêpes",
+          "recette",
+          "donne"
+        ],
+        "created": 1784227126827,
+        "importance": 1
+      },
+      {
+        "id": "b26cc5ec-91b2-40b7-9fe7-79801d24152f",
+        "content": "Q: Quelle est la capitale du Canada ?\nR: Ottawa est la capitale du Canada.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "canada"
+        ],
+        "created": 1784227130468,
+        "importance": 1
+      },
+      {
+        "id": "69e201e7-ee0b-4abc-86f2-b144329b6faf",
+        "content": "Q: Explique le fonctionnement d'Internet\nR: L'Internet est un réseau mondial informatisé qui permet d'échanger des données entre les ordinateurs à travers des connexions. Il utilise un protocole de communication nommé TCP/IP pour établir des liens entre les ordinateurs et échanges de fichiers, messages ou services en ligne.",
+        "tags": [
+          "explique",
+          "fonctionnement",
+          "d'internet"
+        ],
+        "created": 1784227153304,
+        "importance": 1
+      },
+      {
+        "id": "38807053-962c-4427-8f14-bac423af6486",
+        "content": "Q: Qu'est-ce que la cryptographie ?\nR: La cryptographie est une science informatique qui permet de chiffrer des données pour les rendre indécipherables par des tiers, ainsi garantissant leur sécurité. Les algorithmes de cryptage peuvent être symétriques ou asymétriques et sont utilisés dans le monde numérique pour assurer la confidentialité, l'intégrité et l'authentification des informations.",
+        "tags": [
+          "cryptographie",
+          "qu'est-ce"
+        ],
+        "created": 1784227180891,
+        "importance": 1
+      },
+      {
+        "id": "b3ce0a20-a990-4b03-9761-a9883461d28b",
+        "content": "Q: Donne 5 astuces pour apprendre une langue\nR: 1. Utiliser des applications d'apprentissage de langues régulièrement.\n2. Pratiquer la conversation avec des locuteurs natifs.\n3. Lire des livres et articles en langue cible.\n4. Repéter les mots et phrases pour améliorer la prononciation.\n5. Utiliser un dictionnaire de traduction pour comprendre le sens des mots.",
+        "tags": [
+          "apprendre",
+          "donne",
+          "astuces"
+        ],
+        "created": 1784227350358,
+        "importance": 1
+      },
+      {
+        "id": "0c868881-fa44-4031-8c05-fd9cf7cff2ea",
+        "content": "Q: Quelle est la température du Soleil ?\nR: Le Soleil n'a pas de température car il n'est pas un corps solide ou liquide. Il est un étoile, composé d'un gaz chaud et lumineux. Sa température moyenne se situe autour des 5 500°C.",
+        "tags": [
+          "quelle",
+          "soleil",
+          "température"
+        ],
+        "created": 1784227370159,
+        "importance": 1
+      },
+      {
+        "id": "a9038eaa-5211-4f8b-9858-0a9223a2b339",
+        "content": "Q: Explique la photosynthèse en détail\nR: La photosynthèse est le processus par lequel les plantes et certains micro-organismes produisent leur énergie, à partir de la lumière solaire. Elle consiste à convertir le dioxyde de carbone (CO2) et l'eau (H2O) en glucides et oxygène (O2), grâce à la chlorophylle et à l'énergie lumineuse. Il existe deux phases : la phase lumineuse, où la lumière est utilisée pour spliter les molécules d'eau et former des protons et électrons libres, et la phase sombre, où ces protons et électrons sont transportés pour produire de l'ATP (énergie) et du glucose.",
+        "tags": [
+          "explique",
+          "détail",
+          "photosynthèse"
+        ],
+        "created": 1784227423842,
+        "importance": 1
+      },
+      {
+        "id": "e5ef7ae5-462a-42ad-a0cd-d6fbd819e4e2",
+        "content": "Q: Qu'est-ce que le HTTPS ?\nR: Le HTTPS est un protocole d'échange de données sur Internet qui utilise la cryptographie pour rendre la communication plus sûre, en particulier les informations sensibles telles que des identifiants d'utilisateur et des cartes de crédit. Il repose sur le HTTP mais ajoute un protocole SSL/TLS pour sécuriser les échanges.",
+        "tags": [
+          "https",
+          "qu'est-ce"
+        ],
+        "created": 1784227446413,
+        "importance": 1
+      },
+      {
+        "id": "cc5a6745-724d-4ba7-8158-a70bf9e91446",
+        "content": "Q: Donne une recette de chocolate chip cookies\nR: Recette de cookie aux pépites de chocolat :\n- 200g beurre fondu\n- 200g sucre\n- 1 oeuf\n- 250g farine\n- 1 cuillère à café bicarbonate de soude\n- 1/2 cuillère à café sel\n- 300g pépites de chocolat\n\nPréchauffez le four à 180°C. Mélangez le beurre fondu et le sucre, ajoutez l'œuf battu puis les autres ingrédients en mélangeant doucement. Formez des boules de pâte qu'entreposez sur du papier sulfurisé avant de les cuire 10-12 min. Laissez refroidir avant de déguster !",
+        "tags": [
+          "recette",
+          "donne",
+          "cookies"
+        ],
+        "created": 1784227670183,
+        "importance": 1
+      },
+      {
+        "id": "9d10b54b-0a62-448f-a96d-8812a9d340f5",
+        "content": "Q: Quelle est la capitale de l'Inde ?\nR: La capitale de l'Inde est New Delhi.",
+        "tags": [
+          "l'inde",
+          "capitale",
+          "quelle"
+        ],
+        "created": 1784227676417,
+        "importance": 1
+      },
+      {
+        "id": "031c51d7-ff5b-4075-b1cd-74489a49e11b",
+        "content": "Q: Explique la différence entre 32-bit et 64-bit\nR: La différence entre un processeur 32-bits et un processeur 64-bits tient au nombre maximum de bits que chaque variable peut contenir. Le processeur 64-bits peut traiter plus de données en même temps, ce qui permet une meilleure performance pour les applications complexes ou utilisant beaucoup de mémoire.",
+        "tags": [
+          "64-bit",
+          "entre",
+          "explique"
+        ],
+        "created": 1784227704129,
+        "importance": 1
+      },
+      {
+        "id": "25bbf34d-1981-4b80-af17-01d783b1a709",
+        "content": "Q: Qu'est-ce que Docker ?\nR: Docker est une plateforme logicielle permettant la virtualisation des applications en créant des conteneurs, permettant ainsi d'isoler leurs environnements de développement et d'exécution.",
+        "tags": [
+          "docker",
+          "qu'est-ce"
+        ],
+        "created": 1784227719615,
+        "importance": 1
+      },
+      {
+        "id": "564d0e9a-162a-4f9e-8b07-8529f4598ab6",
+        "content": "Q: Donne 5 conseils pour prendre soin de ses plantes\nR: 1. Régulariser l'arrosage.\n2. Fournir le bon substrat.\n3. Mettre en place un drainage efficace.\n4. Adapter les soins aux besoins des espèces.\n5. Éliminer les maladies et les parasites.",
+        "tags": [
+          "plantes",
+          "donne",
+          "conseils"
+        ],
+        "created": 1784227739455,
+        "importance": 1
+      },
+      {
+        "id": "f2e126f2-b25c-4d5c-901e-071c60e5ee94",
+        "content": "Q: Quelle est la vitesse du son ?\nR: La vitesse du son dans l'air sec à 20°C est de 343 m/s. Elle varie selon la température et la composition de l'air.",
+        "tags": [
+          "quelle",
+          "vitesse"
+        ],
+        "created": 1784227751878,
+        "importance": 1
+      },
+      {
+        "id": "7f9c0fc2-529e-464a-bc42-67bfa064122a",
+        "content": "Q: Explique le principe d'Archimède\nR: Le principe d'Archimède établit que lorsqu'un corps flottant est submergé dans un liquide, il subit une force égale à la densité du liquide multipliée par le volume qu'il displace. Cela signifie que la force de pesanteur d'un objet immersé est égal à la force exercée par le liquide sur cet objet.",
+        "tags": [
+          "d'archimède",
+          "explique",
+          "principe"
+        ],
+        "created": 1784227777755,
+        "importance": 1
+      },
+      {
+        "id": "8dd2ce69-3abe-4d28-a49a-79ecc8f1e9f2",
+        "content": "Q: Qu'est-ce que Kubernetes ?\nR: Kubernetes est un outil open source permettant la gestion automatisée d'applications dans des environnements conteneurisés. Il orchestre les ressources informatiques nécessaires à l'exécution et au déploiement des applications.",
+        "tags": [
+          "qu'est-ce",
+          "kubernetes"
+        ],
+        "created": 1784227794626,
+        "importance": 1
+      },
+      {
+        "id": "dccbcac8-04f7-42b8-bf2a-4e6ad10a3ea6",
+        "content": "Q: Donne une recette de guacamole\nR: Ingrédients : avocat, oignon, citron, coriandre, poivrons, sel. Mixer les avocats coupés jusqu'à obtenir une purée, ajouter les autres ingrédients coupés, mélanger et servir. Bon appétit !",
+        "tags": [
+          "recette",
+          "donne",
+          "guacamole"
+        ],
+        "created": 1784227814632,
+        "importance": 1
+      },
+      {
+        "id": "bc132cd6-0f32-4393-b022-8d3e02f1a264",
+        "content": "Q: Quelle est la capitale de la Russie ?\nR: Moscou est la capitale de la Russie.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "russie"
+        ],
+        "created": 1784227820368,
+        "importance": 1
+      },
+      {
+        "id": "7758ae52-f9c0-4765-ab0b-f9314783bbed",
+        "content": "Q: Explique ce qu'est un VPN\nR: Un VPN est un réseau virtuel privé permettant d'établir une connexion sécurisée entre deux points en utilisant des technologies de tunneling pour protéger les données transmises. Il permet aux utilisateurs d'accéder à Internet de manière anonyme et sécurisée.",
+        "tags": [
+          "explique",
+          "qu'est"
+        ],
+        "created": 1784227841144,
+        "importance": 1
+      },
+      {
+        "id": "2816f9c6-1fd4-435a-b87b-658f637c23a4",
+        "content": "Q: Qu'est-ce que le framework React ?\nR: Le framework React est un outil JavaScript utilisé pour développer des interfaces utilisateur dynamiques en utilisant la méthode de rendu virtuel. Il est maintenu par Facebook et permet de créer une interface graphique efficace, performante et améliorée progressivement.",
+        "tags": [
+          "framework",
+          "react",
+          "qu'est-ce"
+        ],
+        "created": 1784227858774,
+        "importance": 1
+      },
+      {
+        "id": "b06ed36f-13c9-4b6a-bc2b-528f3d61d763",
+        "content": "Q: Donne 5 astuces pour économiser de l'eau\nR: 1. Évitez d'utiliser trop d'eau lors du lavage des voitures ou de la rue.\n2. Installez un réducteur d'écoulement dans les douches et les robinets pour limiter le débit d'eau.\n3. Récupérez l'eau de pluie pour arroser votre jardin.\n4. Évitez l'évacuation d'eau chaude et utilisez un réservoir à eau froide pour les lessives.\n5. Faites attention aux fuites et les réparez rapidement.",
+        "tags": [
+          "l'eau",
+          "donne",
+          "économiser"
+        ],
+        "created": 1784227897012,
+        "importance": 1
+      },
+      {
+        "id": "a62aac6a-eb64-4bca-9d09-351f95567ebb",
+        "content": "Q: Quelle est la distance Terre-Soleil ?\nR: La distance Terre-Soleil varie entre 91,5 millions de kilomètres au point le plus éloigné (apogée) à 147,1 millions de kilomètres au point le plus proche (perigée). Cependant, en moyenne, la distance est d'environ 149,6 millions de kilomètres.",
+        "tags": [
+          "terre-soleil",
+          "quelle",
+          "distance"
+        ],
+        "created": 1784227917453,
+        "importance": 1
+      },
+      {
+        "id": "f5751a7c-dcd3-4096-a7dd-c4310089236d",
+        "content": "Q: Explique le système immunitaire simplement\nR: Le système immunitaire protège l'organisme contre les agents pathogènes (bactéries, virus, champignons). Il se compose de deux parties principales : l'immunité innée (réaction automatique) et l'immunité adaptative (développée après infection précédente). Les globules blancs sont des cellules importantes dans ce système.",
+        "tags": [
+          "immunitaire",
+          "système",
+          "simplement"
+        ],
+        "created": 1784227942512,
+        "importance": 1
+      },
+      {
+        "id": "77e017f3-8c40-479a-9c27-47297a660dc4",
+        "content": "Q: Qu'est-ce que Python comme langage ?\nR: Python est un langage de programmation haut niveau, interprété et généraliste. Il est connu pour sa simplicité syntaxique, sa lisibilité, sa puissance d'exécution et son utilisation dans divers domaines (web, science des données, machine learning, etc.).",
+        "tags": [
+          "python",
+          "langage",
+          "qu'est-ce"
+        ],
+        "created": 1784227960793,
+        "importance": 1
+      },
+      {
+        "id": "ade356c6-218f-4389-bf4c-16e68082d59d",
+        "content": "Q: Donne une recette de quiche lorraine\nR: Quiche Lorraine :\n\nIngrédients : Pâte brisée, 4 œufs, 250g crème fraîche, 250g lardons, oignon haché.\n\nPréparation : Étaler la pâte brisée dans un moule à tarte et cuire à blanc. Faire sauter les lardons et l'oignon. Bien battre les œufs avec la crème fraîche, saler puis verser sur la pâte cuite, ajouter les lardons puis enfourner pour 20-25 minutes à 180°C.",
+        "tags": [
+          "lorraine",
+          "recette",
+          "donne"
+        ],
+        "created": 1784227999305,
+        "importance": 1
+      },
+      {
+        "id": "8ba3468c-4887-492a-b81a-4f93472f644d",
+        "content": "Q: Quelle est la capitale de l'Italie ?\nR: La capitale de l'Italie est Rome.",
+        "tags": [
+          "capitale",
+          "l'italie",
+          "quelle"
+        ],
+        "created": 1784228003129,
+        "importance": 1
+      },
+      {
+        "id": "bab9a798-f710-41ad-a1c8-79a543c66e8b",
+        "content": "Q: Explique la différence entre compilation et interprétation\nR: Compilation signifie convertir du code source en exécutable. Il s'exécute directement. Interprétation signifie exécuter le code source d'une ligne à une autre, sans conversion préalable.",
+        "tags": [
+          "entre",
+          "explique",
+          "interprétation"
+        ],
+        "created": 1784228017369,
+        "importance": 1
+      },
+      {
+        "id": "5a8e7aec-64b2-4eec-b124-292519237dc6",
+        "content": "Q: Qu'est-ce que Git ?\nR: Git est un système de gestion de versions distribué permettant de gérer les modifications d'un projet informatique collaboratif. Il permet de suivre l'évolution des fichiers, de ramener une copie du projet à un état précédent et de résoudre des conflits lorsque plusieurs développeurs modifient le même fichier.",
+        "tags": [
+          "qu'est-ce"
+        ],
+        "created": 1784228039766,
+        "importance": 1
+      },
+      {
+        "id": "87140b1d-da13-4b64-a6ac-e07724a0446c",
+        "content": "Q: Donne 5 conseils pour améliorer sa concentration\nR: 1. Élimine les distractions physiques.\n2. Prends des pauses régulières.\n3. Fait de réguliers exercices physiques.\n4. Memez votre espace de travail tranquille.\n5. Utilisez des techniques de méditation ou relaxation.",
+        "tags": [
+          "améliorer",
+          "donne",
+          "conseils"
+        ],
+        "created": 1784228280398,
+        "importance": 1
+      },
+      {
+        "id": "a2620b23-633a-456c-99ed-eea2a33cf3e3",
+        "content": "Q: Quelle est l'espérance de vie moyenne en France ?\nR: En France, l'espérance de vie moyenne est de environ 84 ans pour les femmes et 79 ans pour les hommes (chiffres de 2020).",
+        "tags": [
+          "quelle",
+          "l'espérance",
+          "france"
+        ],
+        "created": 1784228288300,
+        "importance": 1
+      },
+      {
+        "id": "c155cd89-7494-41e4-ba48-7e03894215ea",
+        "content": "Q: Explique ce qu'est un système d'exploitation\nR: Un système d'exploitation est un logiciel qui gère les ressources matérielles d'un ordinateur pour permettre l'exécution de programmes, la gestion des fichiers et d'autres tâches système. Les systèmes d'exploitation peuvent être classés en temps réel (RT) ou non-temps réel (NT).",
+        "tags": [
+          "système",
+          "explique",
+          "d'exploitation"
+        ],
+        "created": 1784228313117,
+        "importance": 1
+      },
+      {
+        "id": "0645d396-d4d7-4e93-b6b3-6247985298b0",
+        "content": "Q: Qu'est-ce que le CSS ?\nR: Le CSS, ou Cascading Style Sheets, est une langage utilisé pour définir la présentation des documents web. Il permet de gérer les aspects visuels d'un site, tels que les couleurs, les polices et la disposition des éléments.",
+        "tags": [
+          "qu'est-ce"
+        ],
+        "created": 1784228330576,
+        "importance": 1
+      },
+      {
+        "id": "2807d908-d1bb-48b0-a120-1919703950a3",
+        "content": "Q: Donne une recette de salade César\nR: Salade César : 8 feuilles de laitue, 60g d'anchois émincés, 50g de parmesan râpé, 2 jaunes d'œufs, vinaigrette au maïs et à l'ail. Mélanger tous les ingrédients ensemble puis saler et poivrer au goût.",
+        "tags": [
+          "césar",
+          "recette",
+          "donne"
+        ],
+        "created": 1784228356698,
+        "importance": 1
+      },
+      {
+        "id": "07f02102-bd45-4d8b-85c7-b0ffd70c9961",
+        "content": "Q: Quelle est la capitale de la Chine ?\nR: Pékin (Beijing) est la capitale de la Chine.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "chine"
+        ],
+        "created": 1784228361441,
+        "importance": 1
+      },
+      {
+        "id": "6a6b34d1-2182-4ddf-99dc-613c9787f192",
+        "content": "Q: Explique le rôle d'un processeur\nR: Un processeur est un composant principal de l'ordinateur qui exécute des instructions logicielles. Il effectue les calculs pour gérer les données, contrôler l'entrée-sortie et gérer le système d'exploitation. Il permet donc aux ordinateurs de traiter les informations rapidement.",
+        "tags": [
+          "processeur",
+          "explique"
+        ],
+        "created": 1784228383225,
+        "importance": 1
+      },
+      {
+        "id": "9aa5e952-a3d9-4677-b9d4-34578050c171",
+        "content": "Q: Qu'est-ce que JavaScript ?\nR: JavaScript est un langage de programmation utilisé pour ajouter des fonctionnalités dynamiques aux pages web. Il permet d'écouter les événements utilisateur, manipuler le DOM, valider les formulaires et créer des animations.",
+        "tags": [
+          "javascript",
+          "qu'est-ce"
+        ],
+        "created": 1784228398243,
+        "importance": 1
+      },
+      {
+        "id": "84ad15f2-ea3f-4215-a866-8d8f90653500",
+        "content": "Q: Donne 5 astuces pour voyager pas cher\nR: 1. Acheter des billets d'avance.\n2. Comparer les prix entre différents sites de voyageurs.\n3. Choissir des destinations moins coûteuses en hiver.\n4. Utiliser des hôtels d'étapes, campings ou appart'hôtel.\n5. Découvrir la cuisine locale pour se nourrir moins cher.",
+        "tags": [
+          "voyager",
+          "donne",
+          "astuces"
+        ],
+        "created": 1784228428150,
+        "importance": 1
+      },
+      {
+        "id": "904fe53a-bf8b-4982-a9d5-7dd351400855",
+        "content": "Q: Quelle est la profondeur de l'océan Pacifique ?\nR: La profondeur de l'Océan Pacifique varie considérablement, mais son point le plus profond se trouve dans la mer de Kara et s'appelle l'abîme du Challenger, atteignant environ 10 994 mètres.",
+        "tags": [
+          "profondeur",
+          "l'océan",
+          "quelle"
+        ],
+        "created": 1784228472953,
+        "importance": 1
+      },
+      {
+        "id": "606af249-0e0e-41a0-9134-5c758700ace8",
+        "content": "Q: Explique ce qu'est la mécanique quantique\nR: La mécanique quantique est un cadre théorique qui décrit le comportement des particules à petites échelles, tels les électrons et les photons. Elle introduit l'idée fondamentale de superposition d'états quantiques, où une particule peut être simultanément dans plusieurs états possibles, et de complémentarité, où certains aspects physiques ne peuvent être mesurés ensemble sans perturber la système.",
+        "tags": [
+          "mécanique",
+          "explique",
+          "quantique"
+        ],
+        "created": 1784228524606,
+        "importance": 1
+      },
+      {
+        "id": "a768b553-8e00-4218-b8ad-5cdb718c4b61",
+        "content": "Q: Qu'est-ce que Linux ?\nR: Linux est un système d'exploitation open-source basé sur le noyau Linus Torvalds créé en 1991. Il peut être utilisé pour de nombreux types de systèmes informatiques, y compris les serveurs et les ordinateurs personnels.",
+        "tags": [
+          "qu'est-ce",
+          "linux"
+        ],
+        "created": 1784228546779,
+        "importance": 1
+      },
+      {
+        "id": "9072d5cb-b8c1-4d9e-9ee7-5a9ec6b4e2c8",
+        "content": "Q: Donne une recette de bœuf bourguignon\nR: Bœuf Bourguignon :\n- Mariner le bouillon de viande avec du vin rouge pendant une heure.\n- Faire revenir des oignons, carottes et lardons dans du beurre.\n- Ajouter le bouillon et les morceaux de bœuf et laisser mijoter à feu doux jusqu'à tendreté (2h).\n- Incorporer des champignons de Paris et des épices (sel, poivre, persil) à la fin.",
+        "tags": [
+          "bourguignon",
+          "recette",
+          "donne"
+        ],
+        "created": 1784228580589,
+        "importance": 1
+      },
+      {
+        "id": "763680df-3d6c-4841-82e1-3ee07bf40fb9",
+        "content": "Q: Quelle est la capitale de l'Allemagne ?\nR: Berlin est la capitale de l'Allemagne.",
+        "tags": [
+          "l'allemagne",
+          "capitale",
+          "quelle"
+        ],
+        "created": 1784228584621,
+        "importance": 1
+      },
+      {
+        "id": "dc708d41-9fce-4d29-9557-790e55e2f48f",
+        "content": "Q: Explique la différence entre RAM et disque dur\nR: La RAM est une mémoire vive utilisée pour stocker les données qui sont actuellement utilisées par le système, permettant ainsi aux processeurs de travailler plus rapidement. En revanche, un disque dur est une unité de stockage interne utilisé pour enregistrer définitivement les fichiers et applications, même lorsque le système n'est pas allumé. La RAM est beaucoup plus rapide mais plus coûteuse que le disque dur, qui offre une capacité de stockage plus importante et moins coûteuse.",
+        "tags": [
+          "disque",
+          "entre",
+          "explique"
+        ],
+        "created": 1784228618895,
+        "importance": 1
+      },
+      {
+        "id": "b43a6412-5246-40cc-9aa0-612fc7c149b4",
+        "content": "Q: Qu'est-ce qu'une base de données ?\nR: Une base de données est un ensemble organisé de données stockées dans un système informatique, permettant d'y accéder, de les manipuler et de les exploiter.",
+        "tags": [
+          "données",
+          "qu'est-ce",
+          "qu'une"
+        ],
+        "created": 1784228631109,
+        "importance": 1
+      },
+      {
+        "id": "a46855b9-a4fb-4042-9a22-7213821508ab",
+        "content": "Q: Donne 5 conseils pour faire de l'exercice régulièrement\nR: 1. Fixez un horaire régulier pour votre exercice.\n2. Cherchez des activités physiques que vous aimez.\n3. Prenez des objectifs réelistes et mesurez votre progression.\n4. Suivez une planification d'entraînement adaptée à vos objectifs.\n5. Profitez de l'exercice comme moment pour vous détendre et se reposer mentalement.",
+        "tags": [
+          "faire",
+          "conseils",
+          "l'exercice"
+        ],
+        "created": 1784228659526,
+        "importance": 1
+      },
+      {
+        "id": "bbc69b95-7710-4a15-9124-7bce73147809",
+        "content": "Q: Quelle est la masse de la Terre ?\nR: La masse de la Terre est de 5,972 × 10^{24} kg.",
+        "tags": [
+          "quelle",
+          "terre",
+          "masse"
+        ],
+        "created": 1784228667029,
+        "importance": 1
+      },
+      {
+        "id": "0ac6b890-a864-4945-86ab-9b08a50f5c2a",
+        "content": "Q: Explique le cycle de l'eau\nR: Le cycle de l'eau se déroule en trois étapes principales : évaporation (l'eau se transforme en vapeur), condensation (la vapeur s'agrège pour former des nuages), et précipitation (les gouttes de pluie tombent à la Terre). L'écoulement des eaux de surface et souterraines complète le cycle.",
+        "tags": [
+          "cycle",
+          "explique",
+          "l'eau"
+        ],
+        "created": 1784228732635,
+        "importance": 1
+      },
+      {
+        "id": "ed7e618a-a40b-4781-9992-e48a2989d754",
+        "content": "Q: Qu'est-ce que l'UX design ?\nR: L'UX design, ou design d'expérience utilisateur, est un processus visant à améliorer l'interaction entre les humains et les produits numériques en optimisant leur fonctionnalité, esthétique et utilisabilité.",
+        "tags": [
+          "design",
+          "qu'est-ce"
+        ],
+        "created": 1784228749283,
+        "importance": 1
+      },
+      {
+        "id": "1c98cc6d-41cd-46de-9f0a-45bc6bf54f8c",
+        "content": "Q: Donne une recette de mousse au chocolat\nR: Ingrédients : 250g chocolat noir, 6 oeufs, 250g sucre, 40cl crème liquide entière. Faire fondre le chocolat puis battre les œufs avec le sucre, ajouter le chocolat et la crème en 3 fois en mélangeant. Verser dans un moule à charnière et réfrigérer au moins 2 heures avant de dégustation.",
+        "tags": [
+          "recette",
+          "donne",
+          "chocolat"
+        ],
+        "created": 1784228779241,
+        "importance": 1
+      },
+      {
+        "id": "ef34fde5-aafc-4706-9497-d7af762f7085",
+        "content": "Q: Quelle est la capitale du Mexique ?\nR: La capitale du Mexique est Mexico.",
+        "tags": [
+          "mexique",
+          "capitale",
+          "quelle"
+        ],
+        "created": 1784228782561,
+        "importance": 1
+      },
+      {
+        "id": "b68f2a26-d25b-4329-8979-6ab14d37aa5f",
+        "content": "Q: Explique ce qu'est une adresse IP\nR: Une adresse IP est une suite numérique unique qui identifie un appareil sur un réseau informatique. Elle permet de localiser le dispositif dans l'espace Internet et d'y établir des communications.",
+        "tags": [
+          "adresse",
+          "explique",
+          "qu'est"
+        ],
+        "created": 1784228796700,
+        "importance": 1
+      },
+      {
+        "id": "270c9978-989e-4d78-a636-376a2da351fd",
+        "content": "Q: Qu'est-ce que le JSON ?\nR: Le JSON (JavaScript Object Notation) est un format de données léger et facilement lisible permettant la transmission de données entre des applications web. Il est basé sur du JavaScript et utilise des paires clé-valeur pour représenter des objets et des tableaux.",
+        "tags": [
+          "qu'est-ce"
+        ],
+        "created": 1784228814202,
+        "importance": 1
+      },
+      {
+        "id": "9cba7f13-3a56-498d-abfb-9c6564536a66",
+        "content": "Q: Donne 5 astuces pour organiser ses vacances\nR: 1. Planifier l'itinéraire avant-garde.\n2. Reserver les logements et activités précocement.\n3. Packer les vêtements adaptés à chaque saison et activité.\n4. Veiller à la santé (vaccins, médicaments) et assurer l'assurance-voyage.\n5. Garder un journal pour documenter expériences et souvenirs.",
+        "tags": [
+          "vacances",
+          "donne",
+          "organiser"
+        ],
+        "created": 1784228863421,
+        "importance": 1
+      },
+      {
+        "id": "6c882905-6fc7-4992-8dc9-7c0ec65d0d54",
+        "content": "Q: Quelle est l'origine de l'écriture ?\nR: L'écriture a évolué de la représentation symbolique des objets à travers les signes pictographiques vers le phonétisme et l'alphabet, qui a commencé avec le système d'écriture cunéiforme sumérien au IVe millénaire av. J.-C., puis l'alphabet phénicien au XIIe siècle av. J.-C.",
+        "tags": [
+          "l'écriture",
+          "quelle",
+          "l'origine"
+        ],
+        "created": 1784228912328,
+        "importance": 1
+      },
+      {
+        "id": "b3e3699c-45e3-417f-a93f-92432ade045f",
+        "content": "Q: Explique pourquoi le ciel est bleu\nR: La couleur du ciel paraît bleue en raison de la dispersion des rayons lumineux causée par l'atmosphère terrestre, qui permet aux longues ondes bleues d'être dispersées dans tous les angles. Cela provoque une apparence plus forte et plus perceptible du ciel dans ce spectre de la couleur.",
+        "tags": [
+          "explique",
+          "pourquoi"
+        ],
+        "created": 1784229130684,
+        "importance": 1
+      },
+      {
+        "id": "82055b79-ce8e-447a-af5e-acb6076c47e7",
+        "content": "Q: Qu'est-ce que l'open source ?\nR: L'open source est un mouvement qui promeut le logiciel libre, c'est-à-dire accessible pour la modification, redistribution ou utilisation par des tiers, sous certaines conditions définies par une licence open source.",
+        "tags": [
+          "source",
+          "l'open",
+          "qu'est-ce"
+        ],
+        "created": 1784229144634,
+        "importance": 1
+      },
+      {
+        "id": "e06eda0e-ffab-4cb7-8d6d-3f7119cee268",
+        "content": "Q: Donne une recette de tajine de poulet\nR: Tajine de poulet :\n1. Coupez le poulet en morceaux et marinez-le dans du jus d'orange, huile d'olive, sel, poivre, et oignons émincés pendant 2 heures.\n2. Faites revenir les oignons et ajoutez le poulet, des carottes coupées en morceaux, des tomates pelées et des épices (cumin, cannelle, paprika).\n3. Ajoutez du bouillon de légumes, couvrez et laissez mijoter pendant 45 minutes.\n4. Servez avec des haricots verts et du riz cuit.",
+        "tags": [
+          "recette",
+          "donne",
+          "tajine"
+        ],
+        "created": 1784229198415,
+        "importance": 1
+      },
+      {
+        "id": "ce1a2f17-9953-4d95-a460-2ef936f373c9",
+        "content": "Q: Quelle est la capitale de l'Espagne ?\nR: La capitale de l'Espagne est Madrid.",
+        "tags": [
+          "capitale",
+          "quelle",
+          "l'espagne"
+        ],
+        "created": 1784229203782,
+        "importance": 1
+      },
+      {
+        "id": "98ec1cad-096f-4f17-b903-800bf15f6dce",
+        "content": "Q: Explique la différence entre hardware et software\nR: Le *hardware* est l'ensemble des équipements physiques (ordinateurs, périphériques, etc.) qui composent un système informatique. Le *software*, quant à lui, désigne les programmes, logiciels et instructions qui s'exécutent sur ces matériels pour réaliser diverses tâches ou activités.",
+        "tags": [
+          "software",
+          "entre",
+          "explique"
+        ],
+        "created": 1784229229513,
+        "importance": 1
+      },
+      {
+        "id": "6ef70205-e942-4d24-ad0e-f586a779c7bc",
+        "content": "Q: Qu'est-ce que l'Internet des objets ?\nR: L'Internet des objets désigne un réseau qui permet aux objets physiques d'être connectés au réseau Internet pour échanger des données et interagir entre eux sans nécessiter l'action humaine.",
+        "tags": [
+          "objets",
+          "qu'est-ce",
+          "l'internet"
+        ],
+        "created": 1784229241922,
+        "importance": 1
+      },
+      {
+        "id": "ee550368-bf72-4d98-a93a-581068947634",
+        "content": "Q: Donne 5 conseils pour réussir un entretien d'embauche\nR: 1. Préparation préalable : recherchez l'entreprise, le poste et le contexte.\n2. Maîtrisez votre CV et profil professionnel.\n3. Énoncez clairement vos compétences, expériences et motivations.\n4. Adressez vous aux interlocuteurs de manière courtoise et dynamique.\n5. Suivez les conseils d'hygiène sanitaire et vestimentaire appropriés.",
+        "tags": [
+          "d'embauche",
+          "conseils",
+          "réussir"
+        ],
+        "created": 1784229275148,
+        "importance": 1
+      },
+      {
+        "id": "d942926c-bbc4-4f6b-9eb8-80c9841db621",
+        "content": "Q: Quelle est la population mondiale actuelle ?\nR: La population mondiale s'élevait à environ 7,9 milliards d'habitants en 2020.",
+        "tags": [
+          "actuelle",
+          "population",
+          "quelle"
+        ],
+        "created": 1784229283724,
+        "importance": 1
+      },
+      {
+        "id": "4d86d673-f56b-4068-9cb6-ac58c7d5f25e",
+        "content": "Q: Explique ce qu'est une fonction en programmation\nR: Une fonction est un bloc de code réutilisable dans une programme. Elle prend des entrées (arguments), les traite selon des instructions définies et renvoie un résultat (sortie). La fonction permet ainsi de structurer le code, d'améliorer sa lisibilité et de réduire la répétition inutile.",
+        "tags": [
+          "programmation",
+          "fonction",
+          "explique"
+        ],
+        "created": 1784229306260,
+        "importance": 1
+      }
+    ],
+    "settings": []
+  }
+}

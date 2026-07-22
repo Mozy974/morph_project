@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "security_rules": [
+    {
+      "id": "SEC001",
+      "name": "Hardcoded Credentials",
+      "severity": "CRITICAL",
+      "pattern": "(?i)(api[_-]?key|secret[_-]?key|password|bearer\\s+[a-z0-9_-]+)\\s*=\\s*['\"][^'\"]+['\"]",
+      "action": "BLOCK_AND_PATCH",
+      "remediation": "Utiliser os.getenv() ou ConfigVault pour la gestion sécurisée des secrets."
+    },
+    {
+      "id": "SEC002",
+      "name": "Raw SQL Injection Vulnerability",
+      "severity": "HIGH",
+      "pattern": "(?i)SELECT\\s+.*\\s+FROM\\s+.*\\+.*|EXECUTE\\s+IMMEDIATE",
+      "action": "BLOCK_AND_PATCH",
+      "remediation": "Utiliser des requêtes paramétrées ou un ORM (SQLAlchemy) pour éviter les injections SQL."
+    }
+  ],
+  "ethical_rules": [
+    {
+      "id": "ETH001",
+      "name": "Data Privacy Protection (GDPR)",
+      "severity": "HIGH",
+      "action": "WARN_AND_MASK",
+      "remediation": "Anonymiser ou masquer les données personnelles identifiables (PII)."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# ==============================================================================
+# MANIFESTE KUBERNETES INGRESS (Nginx Controller + Cert-Manager TLS SSL)
+# Enterprise SuperAgent — Endpoints & SSE Streaming Sécurisés en HTTPS
+# ==============================================================================
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: superagent-ingress
+  namespace: superagent-prod
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/buffering: "off"  # Requis pour le streaming Server-Sent Events (SSE)
+spec:
+  tls:
+  - hosts:
+    - superagent.votre-domaine.com
+    secretName: superagent-tls-cert
+  rules:
+  - host: superagent.votre-domaine.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: superagent-api-service
+            port:
+              number: 8000

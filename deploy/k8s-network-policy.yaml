@@ -1,0 +1,52 @@
+# ==============================================================================
+# MANIFESTE KUBERNETES NETWORK POLICY (Zero-Trust Pod Isolation)
+# Enterprise SuperAgent — Isolation du Broker Redis et des Pods Internes
+# ==============================================================================
+
+# Policy 1: Seuls les Pods API et Celery Worker peuvent communiquer avec Redis
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-redis-access
+  namespace: superagent-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: superagent-redis
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: superagent-api
+    - podSelector:
+        matchLabels:
+          app: superagent-worker
+    ports:
+    - protocol: TCP
+      port: 6379
+---
+# Policy 2: Protection et isolation de la base de données Postgres
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-db-access
+  namespace: superagent-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: orchestrator_db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: superagent-api
+    - podSelector:
+        matchLabels:
+          app: superagent-worker
+    ports:
+    - protocol: TCP
+      port: 5432

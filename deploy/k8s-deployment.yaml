@@ -1,0 +1,212 @@
+# ==============================================================================
+# MANIFESTES KUBERNETES PRODUCTION (Infrastructure-as-Code)
+# Enterprise SuperAgent — API, Celery Workers, Redis, Postgres, Prometheus & HPA
+# ==============================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: superagent-prod
+---
+# ---------------------------------------------------------
+# SECRETS ET CONFIGMAPS
+# ---------------------------------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: superagent-secrets
+  namespace: superagent-prod
+type: Opaque
+stringData:
+  MISTRAL_API_KEY: "votre_cle_mistral_prod"
+  TAVILY_API_KEY: "votre_cle_tavily_prod"
+  POSTGRES_PASSWORD: "super_secret_password_prod"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: superagent-config
+  namespace: superagent-prod
+data:
+  REDIS_URL: "redis://superagent-redis-service:6379/0"
+  POSTGRES_URL: "db+postgresql://orchestrator_user:super_secret_password_prod@superagent-db-service:5432/orchestrator_db"
+---
+# ---------------------------------------------------------
+# DEPLOYMENT 1: FASTAPI API FRONTEND (ZERO DOWNTIME ROLLING UPDATES)
+# ---------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superagent-api
+  namespace: superagent-prod
+  labels:
+    app: superagent-api
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: superagent-api
+  template:
+    metadata:
+      labels:
+        app: superagent-api
+    spec:
+      containers:
+      - name: api
+        image: gcr.io/mozy-502615/superagent:1.0.0
+        imagePullPolicy: IfNotPresent
+        command: ["uvicorn", "orchestrator.api:app", "--host", "0.0.0.0", "--port", "8000"]
+        ports:
+        - containerPort: 8000
+          name: http
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "2Gi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: superagent-config
+        - secretRef:
+            name: superagent-secrets
+---
+# ---------------------------------------------------------
+# SERVICE FASTAPI API
+# ---------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: superagent-api-service
+  namespace: superagent-prod
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  selector:
+    app: superagent-api
+---
+# ---------------------------------------------------------
+# HORIZONTAL POD AUTOSCALER (HPA FASTAPI)
+# ---------------------------------------------------------
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: superagent-hpa
+  namespace: superagent-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: superagent-api
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+---
+# ---------------------------------------------------------
+# DEPLOYMENT 2: CELERY WORKER
+# ---------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superagent-worker
+  namespace: superagent-prod
+  labels:
+    app: superagent-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: superagent-worker
+  template:
+    metadata:
+      labels:
+        app: superagent-worker
+    spec:
+      containers:
+      - name: worker
+        image: gcr.io/mozy-502615/superagent:1.0.0
+        imagePullPolicy: IfNotPresent
+        command: ["celery", "-A", "orchestrator.celery_app", "worker", "--loglevel=info"]
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "2000m"
+            memory: "4Gi"
+        envFrom:
+        - configMapRef:
+            name: superagent-config
+        - secretRef:
+            name: superagent-secrets
+---
+# ---------------------------------------------------------
+# STATEFULSET REDIS (MESSAGE BROKER & EVENT BUS)
+# ---------------------------------------------------------
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: superagent-redis
+  namespace: superagent-prod
+spec:
+  serviceName: superagent-redis-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: superagent-redis
+  template:
+    metadata:
+      labels:
+        app: superagent-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: superagent-redis-service
+  namespace: superagent-prod
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: superagent-redis

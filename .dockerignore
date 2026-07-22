@@ -1,0 +1,21 @@
+# Environnement virtuel Python local (inutile dans Docker)
+venv/
+__pycache__/
+*.pyc
+
+# Fichiers Git
+.git/
+.gitignore
+
+# Fichiers de configuration IDE
+.vscode/
+.idea/
+.agents/
+
+# Fichiers Docker (pas besoin de les copier dans l'image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+*.md

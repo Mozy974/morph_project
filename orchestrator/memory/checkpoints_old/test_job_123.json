@@ -1,0 +1,1 @@
+{"user_id": 1, "task": "Test Checkpoint", "job_id": "test_job_123", "query_current": "Test Checkpoint", "last_completed_node": "QA_TESTS", "eclaireur_report": {}, "analyste_verdict": {}, "qa_test_suite": {}, "dev_implementation": {}, "sandbox_results": {}, "redacteur_report": {}, "feedback_history": [], "retry_count": 0, "max_retries": 2, "status": "IN_PROGRESS"}

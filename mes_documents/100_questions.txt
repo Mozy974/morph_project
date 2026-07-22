@@ -1,0 +1,105 @@
+Quelle est la capitale de la France ?
+Explique le théorème de Pythagore en une phrase
+Donne une recette de pancakes en 3 étapes
+Quelle est la distance entre la Terre et la Lune ?
+Explique la photosynthèse simplement
+Qu'est-ce que l'intelligence artificielle ?
+Donne 5 conseils pour mieux dormir
+Quelle est la plus grande planète du système solaire ?
+Explique la différence entre HTTP et HTTPS
+Qu'est-ce que le changement climatique ?
+Donne une recette de ratatouille
+Quelle est l'histoire de la Révolution française ?
+Explique ce qu'est un algorithme
+Qu'est-ce que la blockchain ?
+Donne 5 astuces pour économiser de l'électricité
+Quelle est la vitesse de la lumière ?
+Explique la théorie de la relativité simplement
+Qu'est-ce que le quantum computing ?
+Donne une recette de mayonnaise maison
+Quelle est la capitale du Japon ?
+Explique la différence entre SQL et NoSQL
+Qu'est-ce que le machine learning ?
+Donne 5 conseils pour arrêter de fumer
+Quelle est la hauteur du Mont Everest ?
+Explique le Big Bang simplement
+Qu'est-ce que l'effet de serre ?
+Donne une recette de tarte aux pommes
+Quelle est la capitale du Brésil ?
+Explique ce qu'est une API
+Qu'est-ce que le cloud computing ?
+Donne 5 astuces pour réduire le stress
+Quelle est la durée d'une année sur Mars ?
+Explique la gravité simplement
+Qu'est-ce que l'ADN ?
+Donne une recette de soupe à l'oignon
+Quelle est la capitale de l'Australie ?
+Explique la différence entre TCP et UDP
+Qu'est-ce que le deep learning ?
+Donne 5 conseils pour être productif au travail
+Quelle est la taille de l'univers observable ?
+Explique ce qu'est un trou noir
+Qu'est-ce que l'énergie nucléaire ?
+Donne une recette de crêpes
+Quelle est la capitale du Canada ?
+Explique le fonctionnement d'Internet
+Qu'est-ce que la cryptographie ?
+Donne 5 astuces pour apprendre une langue
+Quelle est la température du Soleil ?
+Explique la photosynthèse en détail
+Qu'est-ce que le HTTPS ?
+Donne une recette de chocolate chip cookies
+Quelle est la capitale de l'Inde ?
+Explique la différence entre 32-bit et 64-bit
+Qu'est-ce que Docker ?
+Donne 5 conseils pour prendre soin de ses plantes
+Quelle est la vitesse du son ?
+Explique le principe d'Archimède
+Qu'est-ce que Kubernetes ?
+Donne une recette de guacamole
+Quelle est la capitale de la Russie ?
+Explique ce qu'est un VPN
+Qu'est-ce que le framework React ?
+Donne 5 astuces pour économiser de l'eau
+Quelle est la distance Terre-Soleil ?
+Explique le système immunitaire simplement
+Qu'est-ce que Python comme langage ?
+Donne une recette de quiche lorraine
+Quelle est la capitale de l'Italie ?
+Explique la différence entre compilation et interprétation
+Qu'est-ce que Git ?
+Donne 5 conseils pour améliorer sa concentration
+Quelle est l'espérance de vie moyenne en France ?
+Explique ce qu'est un système d'exploitation
+Qu'est-ce que le CSS ?
+Donne une recette de salade César
+Quelle est la capitale de la Chine ?
+Explique le rôle d'un processeur
+Qu'est-ce que JavaScript ?
+Donne 5 astuces pour voyager pas cher
+Quelle est la profondeur de l'océan Pacifique ?
+Explique ce qu'est la mécanique quantique
+Qu'est-ce que Linux ?
+Donne une recette de bœuf bourguignon
+Quelle est la capitale de l'Allemagne ?
+Explique la différence entre RAM et disque dur
+Qu'est-ce qu'une base de données ?
+Donne 5 conseils pour faire de l'exercice régulièrement
+Quelle est la masse de la Terre ?
+Explique le cycle de l'eau
+Qu'est-ce que l'UX design ?
+Donne une recette de mousse au chocolat
+Quelle est la capitale du Mexique ?
+Explique ce qu'est une adresse IP
+Qu'est-ce que le JSON ?
+Donne 5 astuces pour organiser ses vacances
+Quelle est l'origine de l'écriture ?
+Explique pourquoi le ciel est bleu
+Qu'est-ce que l'open source ?
+Donne une recette de tajine de poulet
+Quelle est la capitale de l'Espagne ?
+Explique la différence entre hardware et software
+Qu'est-ce que l'Internet des objets ?
+Donne 5 conseils pour réussir un entretien d'embauche
+Quelle est la population mondiale actuelle ?
+Explique ce qu'est une fonction en programmation

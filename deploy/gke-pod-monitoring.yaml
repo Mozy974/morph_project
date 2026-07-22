@@ -1,0 +1,26 @@
+# ==============================================================================
+# MANIFESTE GOOGLE MANAGED SERVICE FOR PROMETHEUS (GMP PodMonitoring CRD)
+# Enterprise SuperAgent — Collecte Optimisée des Métriques (Maîtrise des Coûts)
+# ==============================================================================
+
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: superagent-pod-monitoring
+  namespace: superagent-prod
+spec:
+  selector:
+    matchLabels:
+      app: superagent-api
+  endpoints:
+  - port: 8000
+    path: /metrics
+    interval: 10s
+    metricRelabeling:
+    # ---------------------------------------------------------
+    # OPTIMISATION DES COÛTS GMP (FILTRAGE SÉLECTIF DE MÉTRIQUES)
+    # Ne conserve que les métriques applicatives 'superagent_*'
+    # ---------------------------------------------------------
+    - action: keep
+      sourceLabels: [__name__]
+      regex: "(superagent_tasks_total|superagent_pytest_results|superagent_active_jobs|superagent_task_duration_seconds.*)"

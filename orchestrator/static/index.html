@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise SuperAgent — Real-Time Streaming & HITL Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --accent-primary: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-badge {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 110px;
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.8rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .btn-secondary { background: #334155; }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .preset-chip {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-chip:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-main);
+        }
+
+        /* Timeline Tracker */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            background-color: #0f172a;
+            box-shadow: 0 0 12px var(--accent-glow);
+            transform: scale(1.15);
+        }
+
+        .step.completed {
+            border-color: var(--success);
+            background-color: var(--success);
+            color: white;
+        }
+
+        /* Console SSE Logs */
+        .console-box {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            height: 320px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .log-entry {
+            line-height: 1.4;
+            display: flex;
+            gap: 0.5rem;
+            word-break: break-word;
+        }
+
+        .log-time {
+            color: #64748b;
+            font-size: 0.75rem;
+            min-width: 65px;
+        }
+
+        .log-type-node_start { color: #38bdf8; }
+        .log-type-eclaireur_done { color: #34d399; }
+        .log-type-analyste_verdict { color: #facc15; }
+        .log-type-feedback_loop { color: #fb923c; }
+        .log-type-qa_tests_start { color: #c084fc; }
+        .log-type-code_attempt { color: #a78bfa; }
+        .log-type-pytest_running { color: #60a5fa; }
+        .log-type-pytest_failed { color: #f87171; }
+        .log-type-pytest_success { color: #4ade80; font-weight: 600; }
+        .log-type-skill_pending { color: #e879f9; font-weight: 600; }
+        .log-type-job_success { color: #34d399; font-weight: 700; }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-idle { background: #334155; color: #94a3b8; }
+        .status-running { background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid var(--accent-primary); }
+        .status-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid var(--success); }
+
+        /* Pending Skill Cards */
+        .skill-card {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #c084fc;
+        }
+
+        .skill-directive {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .skill-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .result-viewer {
+            margin-top: 1.5rem;
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .result-viewer pre {
+            white-space: pre-wrap;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-title">
+                <div class="logo-badge">SuperAgent</div>
+                <div>
+                    <h1>Enterprise Agent Architecture</h1>
+                    <div class="subtitle">Human-in-the-Loop Moderation • AI Memory Deduplication • SSE Real-Time Streaming</div>
+                </div>
+            </div>
+            <div>
+                <span id="status-badge" class="status-badge status-idle">IDLE</span>
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Left Column: Input Form & Controls -->
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        <span>🚀 Lancer une Tâche d'Ingénierie</span>
+                    </div>
+
+                    <div class="preset-buttons">
+                        <span class="preset-chip" onclick="setTask('Développer un module de Cache LRU avec taille maximale configurable, expiration des clés TTL et thread-safety (RLock)')">Cache LRU TTL</span>
+                        <span class="preset-chip" onclick="setTask('Module Python de gestion de clés d API avec hachage HMAC-SHA256 et vérification en temps constant')">Clés API HMAC</span>
+                        <span class="preset-chip" onclick="setTask('Développer un Rate Limiter Token Bucket thread-safe avec fenêtre glissante')">Rate Limiter</span>
+                    </div>
+
+                    <div class="input-group">
+                        <textarea id="task-input" placeholder="Décrivez le besoin d'ingénierie logicielle..."></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button id="btn-submit" class="btn" onclick="startSuperAgent()">
+                            <span>Démarrer le SuperAgent</span> ⚡
+                        </button>
+                        <span id="job-id-display" style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace;"></span>
+                    </div>
+                </div>
+
+                <!-- HITL Moderation Panel -->
+                <div class="card">
+                    <div class="card-title">
+                        <span>👤 Modération HITL (Human-in-the-Loop)</span>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" onclick="loadPendingSkills()" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Rafraîchir 🔄</button>
+                            <button class="btn btn-secondary" onclick="triggerDeduplication()" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Nettoyeur IA 🧹</button>
+                        </div>
+                    </div>
+
+                    <div id="pending-skills-container">
+                        <div style="color: var(--text-muted); font-size: 0.85rem;">Aucun skill en attente de modération pour le moment.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Live Event Stream Console -->
+            <div>
+                <div class="card">
+                    <div class="card-title">
+                        <span>📢 Direct Events Stream (SSE)</span>
+                        <span id="event-count" style="font-size: 0.8rem; color: var(--text-muted);">0 évènement(s)</span>
+                    </div>
+
+                    <!-- Step Tracker -->
+                    <div class="timeline">
+                        <div id="step-1" class="step" title="Éclaireur">🔍</div>
+                        <div id="step-2" class="step" title="Analyste">📊</div>
+                        <div id="step-3" class="step" title="QA TestSuite">🧪</div>
+                        <div id="step-4" class="step" title="Codeur Dev">💻</div>
+                        <div id="step-5" class="step" title="Pytest Sandbox">⚙️</div>
+                        <div id="step-6" class="step" title="Rédacteur">✍️</div>
+                    </div>
+
+                    <div id="console-box" class="console-box">
+                        <div class="log-entry" style="color: #64748b;">En attente de lancement...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Viewer -->
+        <div id="result-viewer" class="card result-viewer">
+            <div class="card-title">🎉 Rapport Final & Code Validé</div>
+            <div id="result-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let eventCount = 0;
+
+        function setTask(text) {
+            document.getElementById('task-input').value = text;
+        }
+
+        function updateStatus(statusText, typeClass) {
+            const badge = document.getElementById('status-badge');
+            badge.innerText = statusText;
+            badge.className = `status-badge ${typeClass}`;
+        }
+
+        function appendLog(eventType, message, timestamp) {
+            const consoleBox = document.getElementById('console-box');
+            eventCount++;
+            document.getElementById('event-count').innerText = `${eventCount} évènement(s)`;
+
+            const timeStr = timestamp ? new Date(timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            entry.innerHTML = `
+                <span class="log-time">[${timeStr}]</span>
+                <span class="log-type-${eventType}">${message}</span>
+            `;
+
+            consoleBox.appendChild(entry);
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        function setStepActive(stepNum) {
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (i < stepNum) {
+                    el.className = 'step completed';
+                } else if (i === stepNum) {
+                    el.className = 'step active';
+                } else {
+                    el.className = 'step';
+                }
+            }
+        }
+
+        async function startSuperAgent() {
+            const task = document.getElementById('task-input').value.trim();
+            if (!task) return alert("Veuillez saisir une consigne !");
+
+            document.getElementById('btn-submit').disabled = true;
+            document.getElementById('console-box').innerHTML = '';
+            document.getElementById('result-viewer').style.display = 'none';
+            eventCount = 0;
+
+            updateStatus('RUNNING', 'status-running');
+
+            try {
+                const response = await fetch('/delegate_task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: 1, task: task, max_retries: 2 })
+                });
+
+                const data = await response.json();
+                const jobId = data.job_id;
+                document.getElementById('job-id-display').innerText = `Job ID: ${jobId}`;
+
+                connectSSE(jobId);
+
+            } catch (err) {
+                alert("Erreur lancement task : " + err);
+                document.getElementById('btn-submit').disabled = false;
+                updateStatus('IDLE', 'status-idle');
+            }
+        }
+
+        function connectSSE(jobId) {
+            if (eventSource) eventSource.close();
+
+            eventSource = new EventSource(`/stream/${jobId}`);
+
+            eventSource.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                const eventType = data.event_type;
+                const message = data.message;
+
+                if (eventType === 'heartbeat') return;
+
+                appendLog(eventType, message, data.timestamp);
+
+                if (eventType.includes('eclaireur')) setStepActive(1);
+                if (eventType.includes('analyste')) setStepActive(2);
+                if (eventType.includes('qa_tests')) setStepActive(3);
+                if (eventType.includes('code_attempt')) setStepActive(4);
+                if (eventType.includes('pytest')) setStepActive(5);
+                if (eventType.includes('redacteur')) setStepActive(6);
+                if (eventType === 'skill_pending') loadPendingSkills();
+
+                if (eventType === 'job_success') {
+                    setStepActive(7);
+                    updateStatus('SUCCESS', 'status-success');
+                    document.getElementById('btn-submit').disabled = false;
+                    eventSource.close();
+
+                    fetchResult(jobId);
+                    loadPendingSkills();
+                }
+            };
+
+            eventSource.onerror = function() {
+                // Keep-alive or done
+            };
+        }
+
+        async function fetchResult(jobId) {
+            const res = await fetch(`/status/${jobId}`);
+            const data = await res.json();
+            if (data.status === 'SUCCESS' && data.result) {
+                const viewer = document.getElementById('result-viewer');
+                const content = document.getElementById('result-content');
+                viewer.style.display = 'block';
+                content.innerHTML = `<pre>${data.result.rapport_markdown}</pre>`;
+            }
+        }
+
+        // HITL Moderation Logic
+        async function loadPendingSkills() {
+            const container = document.getElementById('pending-skills-container');
+            try {
+                const res = await fetch('/skills/pending');
+                const data = await res.json();
+                const pending = data.pending_skills || [];
+
+                if (pending.length === 0) {
+                    container.innerHTML = `<div style="color: var(--text-muted); font-size: 0.85rem;">Aucun skill en attente de modération.</div>`;
+                    return;
+                }
+
+                let html = '';
+                pending.forEach(skill => {
+                    html += `
+                        <div class="skill-card">
+                            <div class="skill-header">
+                                <span>🧠 ${skill.sujet_cle || 'Skill Distillé'}</span>
+                                <span style="font-size: 0.75rem; color: #64748b;">${skill.id}</span>
+                            </div>
+                            <div class="skill-directive">${skill.directive_corrective || 'Aucune directive'}</div>
+                            <div class="skill-actions">
+                                <button class="btn btn-success" onclick="approveSkill('${skill.id}')" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">
+                                    ✅ Approuver pour la Mémoire
+                                </button>
+                                <button class="btn btn-danger" onclick="rejectSkill('${skill.id}')" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">
+                                    ❌ Rejeter
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<div style="color: var(--danger); font-size: 0.85rem;">Erreur chargement : ${e}</div>`;
+            }
+        }
+
+        async function approveSkill(skillId) {
+            try {
+                const res = await fetch(`/skills/approve/${skillId}`, { method: 'POST' });
+                const data = await res.json();
+                alert(data.message);
+                loadPendingSkills();
+            } catch (e) {
+                alert("Erreur approbation : " + e);
+            }
+        }
+
+        async function rejectSkill(skillId) {
+            try {
+                const res = await fetch(`/skills/reject/${skillId}`, { method: 'POST' });
+                const data = await res.json();
+                alert(data.message);
+                loadPendingSkills();
+            } catch (e) {
+                alert("Erreur rejet : " + e);
+            }
+        }
+
+        async function triggerDeduplication() {
+            if (!confirm("Voulez-vous lancer le nettoyeur IA pour dédoublonner la mémoire sémantique ?")) return;
+            try {
+                const res = await fetch('/skills/clean', { method: 'POST' });
+                const data = await res.json();
+                alert(`🧹 Nettoyage accompli : ${data.message || 'Mémoire dédoublonnée !'}`);
+                loadPendingSkills();
+            } catch (e) {
+                alert("Erreur nettoyeur IA : " + e);
+            }
+        }
+
+        // Auto load on start
+        loadPendingSkills();
+    </script>
+</body>
+</html>

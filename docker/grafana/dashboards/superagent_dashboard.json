@@ -1,0 +1,153 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "title": "🔥 Tâches Acceptées (Total)",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "superagent_tasks_total{status=\"ACCEPTED\"}", "legendFormat": "Acceptées" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 50 }, { "color": "red", "value": 100 }] }
+        }
+      }
+    },
+    {
+      "title": "♻️ Tâches Reprises (RESUMED)",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        { "expr": "superagent_tasks_total{status=\"RESUMED\"}", "legendFormat": "Reprises" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [{ "color": "blue", "value": null }] }
+        }
+      }
+    },
+    {
+      "title": "⚡ Jobs Actifs en Temps Réel",
+      "type": "gauge",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 0 },
+      "targets": [
+        { "expr": "superagent_active_jobs", "legendFormat": "Jobs Actifs" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "max": 50,
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "orange", "value": 10 }, { "color": "red", "value": 30 }] }
+        }
+      }
+    },
+    {
+      "title": "🧪 Résultats Pytest Sandbox",
+      "type": "piechart",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 0 },
+      "targets": [
+        { "expr": "superagent_pytest_results_total{result=\"PASSED\"}", "legendFormat": "PASSED" },
+        { "expr": "superagent_pytest_results_total{result=\"FAILED\"}", "legendFormat": "FAILED" }
+      ]
+    },
+    {
+      "title": "📈 Débit de Tâches (RPS)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+      "targets": [
+        { "expr": "rate(superagent_tasks_total[1m])", "legendFormat": "{{status}} RPS" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 20,
+            "gradientMode": "scheme"
+          }
+        }
+      }
+    },
+    {
+      "title": "⏱️ Latence par Nœud (p50 / p95 / p99)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, rate(superagent_task_duration_seconds_bucket[5m]))", "legendFormat": "p50" },
+        { "expr": "histogram_quantile(0.95, rate(superagent_task_duration_seconds_bucket[5m]))", "legendFormat": "p95" },
+        { "expr": "histogram_quantile(0.99, rate(superagent_task_duration_seconds_bucket[5m]))", "legendFormat": "p99" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10
+          }
+        }
+      }
+    },
+    {
+      "title": "🏋️ Durée Moyenne par Nœud du Graphe",
+      "type": "bargauge",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 },
+      "targets": [
+        { "expr": "rate(superagent_task_duration_seconds_sum[5m]) / rate(superagent_task_duration_seconds_count[5m])", "legendFormat": "{{node}}" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": { "mode": "continuous-GrYlRd" },
+          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 30 }] }
+        }
+      }
+    },
+    {
+      "title": "💾 Mémoire Résidente du Processus API",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "PBFA97CFB590B2093" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 },
+      "targets": [
+        { "expr": "process_resident_memory_bytes{job=\"superagent_api\"}", "legendFormat": "RSS (bytes)" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 30,
+            "gradientMode": "scheme"
+          }
+        }
+      }
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["superagent", "production", "observability"],
+  "templating": { "list": [] },
+  "time": { "from": "now-30m", "to": "now" },
+  "timepicker": {},
+  "timezone": "",
+  "title": "🚀 SuperAgent Enterprise — Observabilité Production",
+  "uid": "superagent-prod",
+  "version": 1,
+  "refresh": "5s"
+}

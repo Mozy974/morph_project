@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "collective_mood_history": [
+    {
+      "timestamp": "2026-07-22T13:02:54.498967+00:00",
+      "winning_mood": "OPTIMAL_COLLABORATIVE",
+      "votes_count": {
+        "OPTIMAL_COLLABORATIVE": 2,
+        "BALANCED_CAUTIOUS": 1
+      },
+      "qualified_majority_reached": true,
+      "comprehension_score": 0.96
+    }
+  ],
+  "current_collective_mood": "OPTIMAL_COLLABORATIVE",
+  "emotional_comprehension_score": 0.96
+}

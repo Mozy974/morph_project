@@ -1,0 +1,14 @@
+{
+  "job_id": "b2da240d-65c5-480f-a319-805a7f09f510",
+  "status": "SUCCESS",
+  "result": {
+    "sujet_analyse": "veille technologique LLM du moment",
+    "points_cles": [
+      "Forte tendance détectée sur ce sujet.",
+      "Les sources fiables confirment les données.",
+      "Nécessite une vérification par l'Agent Analyste."
+    ],
+    "fiabilite": "85%",
+    "recommandation": "Poursuivre les recherches"
+  }
+}
