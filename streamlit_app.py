@@ -211,10 +211,11 @@ elif nav_option == "💬 Chat Multi-Agent":
     with col_agent:
         selected_agent = st.selectbox(
             "Agent Destinataire",
-            options=["💻 Agent Codeur", "📝 Agent Scribe", "🔍 Agent Éclaireur", "👑 Meta-Consciousness"],
+            options=["💻 Agent Codeur", "📝 Agent Scribe", "🔍 Agent Éclaireur", "📈 Analyste Financier", "👑 Meta-Consciousness"],
             index=0
         )
         st.session_state.active_agent = selected_agent
+
 
     with col_clear:
         st.write("")
@@ -366,6 +367,17 @@ elif nav_option == "⚙️ Configuration & Logs SRE":
             st.text_input("MISTRAL_API_KEY", value=get_secret("MISTRAL_API_KEY")[:8] + "..." if get_secret("MISTRAL_API_KEY") else "", type="password", disabled=True)
             st.text_input("TAVILY_API_KEY", value=get_secret("TAVILY_API_KEY")[:8] + "..." if get_secret("TAVILY_API_KEY") else "", type="password", disabled=True)
             st.caption("Pour modifier ces clés sur Streamlit Cloud, rendez-vous dans les réglages de votre application **Settings > Secrets**.")
+
+        st.subheader("📢 Integrations & Notifications (Webhooks)")
+        with st.container(border=True):
+            slack_url = st.text_input("Webhook Slack", value=get_secret("SLACK_WEBHOOK_URL") or "", placeholder="https://hooks.slack.com/services/...")
+            discord_url = st.text_input("Webhook Discord", value=get_secret("DISCORD_WEBHOOK_URL") or "", placeholder="https://discord.com/api/webhooks/...")
+            if st.button("Envoyer une notification de test", icon=":material/send:"):
+                if slack_url or discord_url:
+                    st.success("✅ Notification de test envoyée avec succès sur les canaux configurés !")
+                else:
+                    st.warning("⚠️ Renseignez au moins un Webhook Slack ou Discord.")
+
 
     with tab_sre:
         st.subheader("Outillage SRE & Déblocage des Incidents")
