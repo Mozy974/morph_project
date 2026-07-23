@@ -175,7 +175,7 @@ if nav_option == "📊 Dashboard Swarm & Métriques":
 
         line_chart = (
             alt.Chart(chart_data)
-            .mark_line(interpolate="smooth", point=True)
+            .mark_line(interpolate="monotone", point=True)
             .encode(
                 x=alt.X("Timestamp:T", title="Heure"),
                 y=alt.Y("Latence (ms):Q", title="Latence (ms)"),
