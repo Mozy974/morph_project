@@ -12,14 +12,10 @@ import base64
 from typing import Dict, Any, Optional
 
 try:
-    from orchestrator.metrics import Counter
-    SUSPICIOUS_ACCESS_COUNTER = Counter(
-        "superagent_suspicious_access_attempts_total",
-        "Nombre total de tentatives d'accès suspectes ou non autorisées",
-        ["reason"]
-    )
+    from orchestrator.metrics import SUSPICIOUS_ACCESS_COUNTER
 except Exception:
     SUSPICIOUS_ACCESS_COUNTER = None
+
 
 SECRET_KEY = os.getenv("AUTH_SECRET_KEY", "superagent-secret-jit-key-2026")
 
