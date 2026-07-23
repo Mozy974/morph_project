@@ -42,9 +42,13 @@ except ImportError:
 try:
     from orchestrator.agents.intent_sentiment_classifier import IntentSentimentClassifier
     from orchestrator.agents.empathic_agent import EmpathicAgent
+    from orchestrator.agents.multimodal_gateway import MultimodalGateway
+    from orchestrator.agents.voice_gesture_gateway import VoiceGestureGateway
 except ImportError:
     IntentSentimentClassifier = None
     EmpathicAgent = None
+    MultimodalGateway = None
+    VoiceGestureGateway = None
 
 # --- HELPER SECRETS / ENV ---
 def get_secret(key_name: str) -> str:
@@ -74,6 +78,13 @@ if "active_agent" not in st.session_state:
 if "classifier" not in st.session_state:
     st.session_state.classifier = IntentSentimentClassifier() if IntentSentimentClassifier else None
 
+if "multimodal_gateway" not in st.session_state:
+    st.session_state.multimodal_gateway = MultimodalGateway() if MultimodalGateway else None
+
+if "voice_gesture_gateway" not in st.session_state:
+    st.session_state.voice_gesture_gateway = VoiceGestureGateway() if VoiceGestureGateway else None
+
+
 # --- BARRE LATÉRALE ---
 with st.sidebar:
     st.title("🚀 SuperAgent Morph")
@@ -88,11 +99,13 @@ with st.sidebar:
         options=[
             "📊 Dashboard Swarm & Métriques",
             "💬 Chat Multi-Agent",
+            "🎙️ Extension Multimodale (Voix & Vision)",
             "📚 Gestion RAG & Documents",
             "⚙️ Configuration & Logs SRE"
         ],
         label_visibility="collapsed"
     )
+
 
     st.markdown("---")
 
@@ -313,9 +326,147 @@ elif nav_option == "💬 Chat Multi-Agent":
 
 
 # ==============================================================================
+# VUE 2.5 : EXTENSION MULTIMODALE (VOIX & VISION)
+# ==============================================================================
+elif nav_option == "🎙️ Extension Multimodale (Voix & Vision)":
+    st.title("🎙️ Extension Multimodale — Voix, Vision & Gestes")
+    st.markdown("Interagissez avec le Swarm d'agents par la voix, l'analyse d'images UI / schémas et la fusion de signaux multimodaux.")
+
+    tab_vision, tab_voice, tab_unified = st.tabs([
+        "👁️ Vision & Maquettes UI",
+        "🎙️ Voix & Inférence Vocale",
+        "🌐 Fusion Multimodale Unifiée"
+    ])
+
+    # --- TAB VISION ---
+    with tab_vision:
+        st.subheader("👁️ Analyse Visuelle & Décomposition UI TDD")
+        st.markdown("Téléversez une maquette, capture d'écran d'interface ou schéma pour extraire les composants et le cahier des charges TDD.")
+
+        col_img_up, col_img_res = st.columns([1, 1])
+
+        with col_img_up:
+            uploaded_image = st.file_uploader(
+                "Importer une image (PNG, JPG, WEBP)",
+                type=["png", "jpg", "jpeg", "webp"],
+                key="multimodal_img_uploader"
+            )
+            image_prompt = st.text_input(
+                "Directive d'analyse visuelle",
+                value="Analyse la disposition UI, le thème visuel et génère les spécifications TDD.",
+                key="img_prompt_input"
+            )
+
+            if uploaded_image:
+                st.image(uploaded_image, caption="Aperçu de l'image importée", use_container_width=True)
+
+            btn_analyze_img = st.button("🔍 Lancer l'Analyse Visuelle", type="primary", use_container_width=True)
+
+        with col_img_res:
+            if btn_analyze_img or uploaded_image:
+                with st.spinner("Analyse visuelle multi-modale en cours..."):
+                    mg = st.session_state.multimodal_gateway
+                    if mg:
+                        img_bytes = uploaded_image.getvalue() if uploaded_image else "Maquette UI Dashboard Glassmorphism"
+                        spec_res = mg.process_ui_mockup_spec(str(img_bytes)[:100], image_prompt)
+                        vision_res = mg.process_image_input(img_bytes if uploaded_image else "sample_ui.png", image_prompt)
+
+                        st.success("✅ Analyse Visuelle Accomplie avec Succès !")
+
+                        with st.container(border=True):
+                            st.markdown("##### 🧩 Composants UI Détectés")
+                            for comp in spec_res.get("layout_components", []):
+                                st.markdown(f"- 🔲 `{comp}`")
+
+                        with st.container(border=True):
+                            st.markdown("##### 🎨 Directives Design System")
+                            st.json(spec_res.get("design_system_directives", {}))
+
+                        with st.container(border=True):
+                            st.markdown("##### 🧪 Spécifications TDD pour l'Agent Codeur")
+                            for spec in spec_res.get("tdd_specs", []):
+                                st.markdown(f"- 🎯 **TDD** : {spec}")
+                    else:
+                        st.warning("⚠️ MultimodalGateway non initialisé.")
+
+    # --- TAB VOICE ---
+    with tab_voice:
+        st.subheader("🎙️ Commandes Vocales & Inférence Directe")
+        st.markdown("Enregistrez ou téléversez un extrait vocal pour transmettre des instructions au Swarm.")
+
+        col_audio_up, col_audio_res = st.columns([1, 1])
+
+        with col_audio_up:
+            uploaded_audio = st.file_uploader(
+                "Importer un fichier audio (WAV, MP3, OGG, M4A)",
+                type=["wav", "mp3", "ogg", "m4a"],
+                key="multimodal_audio_uploader"
+            )
+
+            voice_text_sim = st.text_area(
+                "Ou saisissez une transcription vocale simulée",
+                value="Analyse la conformité RGPD du dernier contrat d'assurance.",
+                height=100
+            )
+
+            btn_process_voice = st.button("🎙️ Décoder & Traiter le Signal Vocal", type="primary", use_container_width=True)
+
+        with col_audio_res:
+            if btn_process_voice:
+                with st.spinner("Décodage du signal vocal en cours..."):
+                    mg = st.session_state.multimodal_gateway
+                    vg = st.session_state.voice_gesture_gateway
+
+                    if mg and vg:
+                        audio_payload = uploaded_audio.getvalue() if uploaded_audio else voice_text_sim
+                        file_fmt = uploaded_audio.name.split(".")[-1] if uploaded_audio else "wav"
+                        audio_res = mg.process_audio_signal(audio_payload, file_format=file_fmt)
+
+                        st.success("✅ Transcription & Routage Accomplis !")
+
+                        st.metric("Format Audio", audio_res["file_format"].upper())
+                        st.metric("Confiance Décodage", f"{int(audio_res['confidence'] * 100)}%")
+
+                        with st.container(border=True):
+                            st.markdown("##### 📝 Transcription Textuelle")
+                            st.info(audio_res["transcription"])
+
+                        with st.container(border=True):
+                            st.markdown("##### 🎯 Agent Cible Recommandé")
+                            st.markdown(f"👉 **{audio_res['recommended_target_agent']}** *(Intention : `{audio_res['detected_intent']}`)*")
+
+                        if st.button("🚀 Transmettre directement au Chat Multi-Agent"):
+                            st.session_state.chat_messages.append({
+                                "role": "user",
+                                "content": f"[Commande Vocale] {audio_res['transcription']}"
+                            })
+                            st.success("Message envoyé au chat !")
+
+    # --- TAB UNIFIED ---
+    with tab_unified:
+        st.subheader("🌐 Fusion des Signaux Multimodaux")
+        st.markdown("Synthétisez le texte, la vision et la voix en un seul payload d'intention unifié.")
+
+        prompt_txt = st.text_input("Composant Texte", "Crée un composant de visualisation pour les données financières")
+        prompt_vision = st.text_input("Composant Vision", "Graphique en ligne sombre avec grille néon")
+        prompt_audio = st.text_input("Composant Voix", "Assure-toi que les performances soient inférieures à 1 ms")
+
+        if st.button("⚡ Générer le Payload Unifié", type="primary"):
+            mg = st.session_state.multimodal_gateway
+            if mg:
+                unified = mg.unify_multimodal_payload(
+                    text_prompt=prompt_txt,
+                    image_analysis={"description": prompt_vision},
+                    audio_analysis={"transcription": prompt_audio, "recommended_target_agent": "Agent Codeur"}
+                )
+                st.json(unified)
+
+
+# ==============================================================================
 # VUE 3 : GESTION RAG & DOCUMENTS
 # ==============================================================================
 elif nav_option == "📚 Gestion RAG & Documents":
+
     st.title("📚 Gestion de la Base RAG & Connaissances")
     st.markdown("Importez, prévisualisez et gérez les documents de référence utilisés par le Swarm d'agents.")
 
