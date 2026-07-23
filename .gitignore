@@ -29,6 +29,8 @@ core.*
 # Environment & Secrets
 .env
 .env.local
+.streamlit/secrets.toml
+
 
 # Pytest / Cache
 .pytest_cache/
