@@ -51,14 +51,23 @@ except ImportError:
     VoiceGestureGateway = None
 
 # --- HELPER SECRETS / ENV ---
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 def get_secret(key_name: str) -> str:
-    """Récupère une clé depuis st.secrets (Streamlit Cloud) ou os.environ (Local)."""
+    """Récupère une clé depuis st.session_state, st.secrets (Streamlit Cloud) ou os.environ (Local)."""
+    if f"secret_{key_name}" in st.session_state and st.session_state[f"secret_{key_name}"]:
+        return st.session_state[f"secret_{key_name}"]
     try:
         if key_name in st.secrets:
             return st.secrets[key_name]
     except Exception:
         pass
     return os.environ.get(key_name, "")
+
 
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
@@ -529,9 +538,41 @@ elif nav_option == "⚙️ Configuration & Logs SRE":
     with tab_config:
         st.subheader("Clés d'API et Connecteurs")
         with st.container(border=True):
-            st.text_input("MISTRAL_API_KEY", value=get_secret("MISTRAL_API_KEY")[:8] + "..." if get_secret("MISTRAL_API_KEY") else "", type="password", disabled=True)
-            st.text_input("TAVILY_API_KEY", value=get_secret("TAVILY_API_KEY")[:8] + "..." if get_secret("TAVILY_API_KEY") else "", type="password", disabled=True)
-            st.caption("Pour modifier ces clés sur Streamlit Cloud, rendez-vous dans les réglages de votre application **Settings > Secrets**.")
+            input_mistral = st.text_input("MISTRAL_API_KEY", value=get_secret("MISTRAL_API_KEY"), type="password", placeholder="Clé API Mistral AI (ex: mistral_...)")
+            input_tavily = st.text_input("TAVILY_API_KEY", value=get_secret("TAVILY_API_KEY"), type="password", placeholder="Clé API Tavily Search (ex: tvly-...)")
+            
+            if st.button("💾 Enregistrer & Activer les Clés API", icon=":material/save:"):
+                if input_mistral:
+                    st.session_state["secret_MISTRAL_API_KEY"] = input_mistral.strip()
+                    os.environ["MISTRAL_API_KEY"] = input_mistral.strip()
+                if input_tavily:
+                    st.session_state["secret_TAVILY_API_KEY"] = input_tavily.strip()
+                    os.environ["TAVILY_API_KEY"] = input_tavily.strip()
+                
+                os.makedirs(".streamlit", exist_ok=True)
+                sec_path = ".streamlit/secrets.toml"
+                existing = {}
+                if os.path.exists(sec_path):
+                    with open(sec_path, "r", encoding="utf-8") as f:
+                        for line in f:
+                            if "=" in line:
+                                k, v = line.split("=", 1)
+                                existing[k.strip()] = v.strip()
+                
+                if input_mistral:
+                    existing["MISTRAL_API_KEY"] = f'"{input_mistral.strip()}"'
+                if input_tavily:
+                    existing["TAVILY_API_KEY"] = f'"{input_tavily.strip()}"'
+                    
+                with open(sec_path, "w", encoding="utf-8") as f:
+                    for k, v in existing.items():
+                        f.write(f"{k} = {v}\n")
+                        
+                st.success("✅ Clés d'API enregistrées avec succès ! Statut réactualisé.")
+                st.rerun()
+
+            st.caption("ℹ️ En local/Tailscale, les clés sont conservées dans `.streamlit/secrets.toml`. Sur Streamlit Cloud, utilisez **Settings > Secrets**.")
+
 
         st.subheader("📢 Integrations & Notifications (Webhooks)")
         with st.container(border=True):
