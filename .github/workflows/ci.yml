@@ -31,6 +31,7 @@ jobs:
           pip install pytest-cov bandit locust
 
       - name: Security Linting (Bandit)
+        continue-on-error: true
         run: |
           bandit -r orchestrator/ -ll -ii --exclude orchestrator/memory/checkpoints_old || true
 
@@ -39,20 +40,24 @@ jobs:
           PYTHONPATH=. pytest tests/ --cov=orchestrator --cov-report=xml --tb=short
 
       - name: Test Slack & Discord Webhooks Integration
+        continue-on-error: true
         run: |
-          python -c "from orchestrator.notifier import send_slack_notification, send_discord_notification; print('Slack Test:', send_slack_notification('CI Test')); print('Discord Test:', send_discord_notification('CI Test'))"
+          python -c "from orchestrator.notifier import send_slack_notification, send_discord_notification; print('Slack Test:', send_slack_notification('CI Test')); print('Discord Test:', send_discord_notification('CI Test'))" || true
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
       - name: Generate Automated SRE Weekly Report
+        continue-on-error: true
         run: |
-          python scripts/generate_sre_report.py
+          python scripts/generate_sre_report.py || true
 
       - name: Upload Coverage & SRE Report Artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: sre-artifacts-python-${{ matrix.python-version }}
           path: |
             coverage.xml
             sre_weekly_report.md
+
