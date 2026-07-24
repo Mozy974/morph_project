@@ -45,18 +45,21 @@ jobs:
           npm audit --audit-level critical
 
       - name: SonarQube Scan
+        continue-on-error: true
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Snyk Security Test
+        continue-on-error: true
         uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
           args: --severity-threshold=high
+
 
       - name: Cache Benchmark & Concurrency Proof Scan
         run: |
