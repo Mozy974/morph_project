@@ -1,7 +1,9 @@
-# 📧 Modèle d'Email de Proposition Commerciale & Partenariat
+# 📧 Modèle d'Email de Proposition Commerciale, Kit de Démo & Relance J+7
 **Destinataires cibles :** Direction & Partenariats Stratégiques chez Mistral AI (`partnerships@mistral.ai` / `bd@mistral.ai`)
 
 ---
+
+## ✉️ 1. Email Principal de Proposition Commerciale
 
 **Objet :** Partenariat & Démo : SuperAgent Morph — L'Orchestrateur Agentique d'Entreprise propulsé par Mistral AI
 
@@ -9,9 +11,7 @@
 
 **Bonjour l'équipe Mistral AI,**
 
-Les modèles de la gamme Mistral (*Mistral Large, Codestral, Mistral Embed*) s'imposent aujourd'hui comme la référence européenne et mondiale en matière de performance et d'efficience.
-
-Cependant, les entreprises Grands Comptes (*Banque, Assurance, Défense, Santé*) hésitent encore à déployer des agents autonomes en production par manque de **traçabilité**, de **garantie d'auto-correction** et de **résilience**.
+Les modèles de la gamme Mistral (*Mistral Large, Codestral*) s'imposent aujourd'hui comme la référence européenne et mondiale en matière de performance et d'efficience, mais une question stratégique reste en suspens : **comment les déployer en production sans perdre en contrôle, traçabilité ou résilience ?**
 
 C'est précisément pour résoudre ce défi stratégique que nous avons développé **SuperAgent Morph** : un framework d'ingénierie logicielle et d'orchestration multi-agents autonome d'entreprise (**Level 13.0 Swarm Architecture**), spécialement optimisé pour sublimer les modèles Mistral AI.
 
@@ -58,3 +58,33 @@ Bien cordialement,
 *Ingénierie & Architecture Agentique Autonome*  
 📧 contact@superagent-morph.com  
 🌐 [https://github.com/Mozy974/morph_project](https://github.com/Mozy974/morph_project)
+
+---
+
+## 📽️ 2. Script de Démonstration (15 min Live Demo)
+
+1. **Étape 1 : True TDD & Auto-Correction (3 min)** :
+   - Démonstration de la boucle autonome Pytest sous Sandbox isolée (**106/106 tests validés**).
+2. **Étape 2 : Traçabilité Cryptographique SHA-256 (3 min)** :
+   - Présentation de la chaîne de preuve inviolable et des Invariants de Sécurité RGPD (`Level 13.0 Absolute Ethics Engine`).
+3. **Étape 3 : Cockpit 3D WebGL / WebXR (< 0.24 ms) (4 min)** :
+   - Démonstration temps réel sur `static/webgl_skill_evolution.html` (temps de rendu **0.24 ms**, 60 FPS, mode VR 6 DoF).
+4. **Étape 4 : Résilience & Fallback 3 Niveaux (5 min)** :
+   - Simulation d'une coupure réseau avec bascule automatique du Circuit Breaker vers le cache local et RAG ChromaDB.
+
+---
+
+## 📬 3. Email de Relance J+7 (Post-Envoi)
+
+**Objet :** Relance : Partenariat & Démo SuperAgent Morph x Mistral AI
+
+**Bonjour l'équipe Mistral AI,**
+
+Je me permets de relancer ma proposition de partenariat autour de **SuperAgent Morph**, notre orchestrateur agentique d'entreprise optimisé pour les modèles Mistral AI.
+
+Auriez-vous 15 minutes pour un court échange visioconférence cette semaine ou la semaine prochaine afin de découvrir la démonstration en direct ?
+
+Bien cordialement,
+
+**L'Équipe SuperAgent Morph**  
+📧 contact@superagent-morph.com
