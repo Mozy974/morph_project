@@ -27,7 +27,11 @@ except ImportError:
     try:
         from mistralai.client import MistralClient as Mistral
     except ImportError:
-        Mistral = None
+        try:
+            from mistralai.client import Mistral
+        except ImportError:
+            Mistral = None
+
 
 from prometheus_client import Counter, Histogram
 
