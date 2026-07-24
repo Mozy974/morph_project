@@ -47,12 +47,13 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      - name: Generate Automated SRE Weekly Report
+      - name: Generate Automated SRE & Performance Reports
         continue-on-error: true
         run: |
           python scripts/generate_sre_report.py || true
+          python scripts/generate_reports.py || true
 
-      - name: Upload Coverage & SRE Report Artifacts
+      - name: Upload Coverage, Performance & SRE Report Artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -60,4 +61,7 @@ jobs:
           path: |
             coverage.xml
             sre_weekly_report.md
+            reports/
+            screenshots/
+
 

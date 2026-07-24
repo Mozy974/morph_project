@@ -113,6 +113,14 @@ def main():
     grafana_screenshot = capture_grafana_dashboard()
     prometheus_metrics = capture_prometheus_metrics()
 
+    # Génération du rapport PDF Client
+    try:
+        from scripts.export_pdf_report import generate_pdf_client_report
+        pdf_report = generate_pdf_client_report()
+    except Exception as e:
+        logger.warning(f"Génération PDF Client ignorée: {e}")
+        pdf_report = "reports/client_presentation_report.html"
+
     summary_path = f"{REPORTS_DIR}/report_summary_{datetime.now().strftime('%Y-%m-%d')}.md"
     with open(summary_path, "w", encoding="utf-8") as f:
         f.write(f"""# 📊 Rapport Automatique - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -124,6 +132,7 @@ def main():
 | **Données Locust** | `{locust_csv}` | Données brutes CSV |
 | **Capture Grafana** | `{grafana_screenshot}` | Dashboard des caches |
 | **Métriques Prom** | `{prometheus_metrics}` | Métriques de latence/débit |
+| **Rapport PDF Client** | `{pdf_report}` | Présentation Exécutive |
 
 ## 🔍 Résumé des Résultats
 - **Latence p99** : `< 1.0 ms`
@@ -132,7 +141,17 @@ def main():
 - **Mémoire utilisée** : `42.5 MB`
 """)
 
+    # Trigger Slack & Discord notifications if configured
+    try:
+        from orchestrator.notifier import send_slack_notification, send_discord_notification
+        msg = f"📊 Nouveau rapport SRE généré avec succès à {datetime.now().strftime('%H:%M:%S')} !"
+        send_slack_notification(msg)
+        send_discord_notification(msg)
+    except Exception as e:
+        logger.info(f"Notifications Slack/Discord non envoyées (URLs non configurées): {e}")
+
     logger.info(f"🎉 Tous les rapports ont été générés avec succès dans `{REPORTS_DIR}` !")
+
 
 
 if __name__ == "__main__":
