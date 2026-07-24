@@ -21,8 +21,14 @@ try:
 except Exception:
     pass
 
-import chromadb
-from mistralai import Mistral
+try:
+    from mistralai import Mistral
+except ImportError:
+    try:
+        from mistralai.client import MistralClient as Mistral
+    except ImportError:
+        Mistral = None
+
 from prometheus_client import Counter, Histogram
 
 try:
