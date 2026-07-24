@@ -30,7 +30,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pip-audit bandit || true
-          npm ci || npm install || true
+          if [ -f package.json ]; then
+            npm ci || npm install || true
+          fi
 
       - name: Bandit Security Scan (Python)
         continue-on-error: true
@@ -43,9 +45,11 @@ jobs:
           pip-audit --severity high || true
 
       - name: npm Audit Scan
+        if: hashFiles('package.json') != ''
         continue-on-error: true
         run: |
           npm audit --audit-level critical || true
+
 
       - name: SonarQube Scan
         continue-on-error: true
