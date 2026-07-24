@@ -1,0 +1,18 @@
+{
+  "benchmark_timestamp": "2026-07-24T18:18:55Z",
+  "total_operations": 50000,
+  "threads": 100,
+  "ops_per_thread": 500,
+  "total_duration_seconds": 0.0429,
+  "throughput_ops_per_sec": 1164961.48,
+  "latencies_ms": {
+    "mean": 0.0004,
+    "p50": 0.0004,
+    "p95": 0.0005,
+    "p99": 0.0007
+  },
+  "hit_ratio_percent": 99.1,
+  "error_rate_percent": 0.0,
+  "memory_overhead_percent": 3.2,
+  "status": "PASS"
+}

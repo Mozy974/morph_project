@@ -58,6 +58,11 @@ jobs:
           command: test
           args: --severity-threshold=high
 
+      - name: Cache Benchmark & Concurrency Proof Scan
+        run: |
+          PYTHONPATH=. python benchmark_cache_systems.py
+          PYTHONPATH=. pytest tests/test_cache_concurrency_proof.py -v
+
       - name: Trivy Container Image Scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -67,3 +72,14 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL'
+
+      - name: Upload Security & Performance Benchmark Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-and-cache-benchmark-reports
+          path: |
+            reports/cache_benchmark_metrics.json
+            reports/cache_benchmark_metrics.csv
+            rapport_*.md
+
