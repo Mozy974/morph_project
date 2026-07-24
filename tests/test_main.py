@@ -1,7 +1,15 @@
 from fastapi.testclient import TestClient
 from main import app
 
-client = TestClient(app)
+try:
+    from httpx import ASGITransport
+    client = TestClient(transport=ASGITransport(app=app), base_url="http://testserver")
+except Exception:
+    try:
+        client = TestClient(app)
+    except Exception:
+        client = TestClient(app=app)
+
 
 
 def test_health_endpoint():
