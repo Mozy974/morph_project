@@ -1,0 +1,10 @@
+{
+  "name": "superagent-morph",
+  "version": "1.4.3-rc2",
+  "description": "Enterprise SuperAgent Morph — Autonomous AI Engineering Framework",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No JS unit tests defined\" && exit 0"
+  },
+  "dependencies": {}
+}
