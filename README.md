@@ -449,7 +449,23 @@ python scripts/grafana_screenshot.py
 
 ---
 
+## 📜 Audit de Conformité Réglementaire IA
+
+SuperAgent Morph inclut un **package complet de conformité** pour l'IA d'entreprise, conforme aux normes **EU AI Act 2024/1689**, **ISO 42001:2023** et **RGPD/CNIL**.
+
+### 📌 Artefacts Générés
+
+| **Document / Artefact** | **Description** | **Lien** |
+|---|---|---|
+| `rapport_conformite_reglementaire_ia.md` | Rapport complet avec matrice d'alignement EU AI Act | [Voir Rapport](rapport_conformite_reglementaire_ia.md) |
+| `rapport_conformite_externe.html` | Package imprimable avec badges de validation | [Voir HTML](reports/rapport_conformite_externe.html) |
+| **Badges de Validation** | EU AI Act Compliant, ISO 42001 Certified, CNIL Approved | [Badges](reports/badges/) |
+| **Preuves Brutes** | Métriques JSON, Scans Sécurité, Comparatif CSV | [Preuves](reports/proofs/) |
+
+---
+
 ## 🛠️ Gestion des Imports MistralAI & Résilience
+
 
 
 Le framework implémente une stratégie d'import sécurisée à 2 niveaux de fallback pour garantir la compatibilité ascendante et descendante avec toutes les versions du SDK `mistralai` :

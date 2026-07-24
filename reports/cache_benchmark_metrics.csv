@@ -1,6 +1,6 @@
 Metric,Value,Unit,Threshold,Status
-Latency p99,0.0007,ms,< 1.0 ms,PASS
-Latency Mean,0.0004,ms,< 0.5 ms,PASS
+Latency p99,0.0012,ms,< 1.0 ms,PASS
+Latency Mean,0.0005,ms,< 0.5 ms,PASS
 Hit Ratio,99.1,%,> 70.0%,PASS
 Error Rate,0.0,%,< 0.1%,PASS
 Memory Overhead,3.2,%,< 5.0%,PASS

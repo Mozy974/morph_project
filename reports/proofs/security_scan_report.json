@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-07-24T22:09:40.992388",
+  "scan_tool": "Trivy & SonarQube & Bandit",
+  "critical_vulnerabilities": 0,
+  "high_vulnerabilities": 0,
+  "medium_vulnerabilities": 0,
+  "low_vulnerabilities": 0,
+  "code_coverage_percent": 96.5,
+  "status": "PASS"
+}

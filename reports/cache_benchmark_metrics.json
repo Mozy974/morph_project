@@ -1,15 +1,15 @@
 {
-  "benchmark_timestamp": "2026-07-24T18:18:55Z",
+  "benchmark_timestamp": "2026-07-24T21:28:26Z",
   "total_operations": 50000,
   "threads": 100,
   "ops_per_thread": 500,
-  "total_duration_seconds": 0.0429,
-  "throughput_ops_per_sec": 1164961.48,
+  "total_duration_seconds": 0.0615,
+  "throughput_ops_per_sec": 812827.56,
   "latencies_ms": {
-    "mean": 0.0004,
-    "p50": 0.0004,
-    "p95": 0.0005,
-    "p99": 0.0007
+    "mean": 0.0005,
+    "p50": 0.0005,
+    "p95": 0.0009,
+    "p99": 0.0012
   },
   "hit_ratio_percent": 99.1,
   "error_rate_percent": 0.0,
