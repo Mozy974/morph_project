@@ -422,7 +422,18 @@ Le **Level 13.0** constitue le sommet absolu, définitif et l'aboutissement ulti
 
 ---
 
+## 🛠️ Gestion des Imports MistralAI & Résilience
+
+Le framework implémente une stratégie d'import sécurisée à 2 niveaux de fallback pour garantir la compatibilité ascendante et descendante avec toutes les versions du SDK `mistralai` :
+
+- **Fallback 1** : `from mistralai import Mistral` (SDK `mistralai>=1.0.0`).
+- **Fallback 2** : `from mistralai.client import MistralClient as Mistral` (SDK legacy `mistralai<1.0.0`).
+- **Fallback 3** : `Mistral = None` (Mode dégradé hors-ligne / mock REST sans crash au démarrage).
+
+---
+
 ## 📜 License
+
 
 
 
