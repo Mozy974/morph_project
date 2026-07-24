@@ -111,6 +111,49 @@ SUSPICIOUS_ACCESS_COUNTER = _get_or_create_metric(
     labelnames=["reason"]
 )
 
+# --- MÉTRIQUES CHROMADB PREDICTIVE MAINTENANCE ---
+CHROMADB_HEALTH_SCORE = _get_or_create_metric(
+    Gauge,
+    "superagent_chromadb_health_score",
+    "Score de santé sémantique de l'index vectoriel ChromaDB (0.0 à 1.0)"
+)
+
+CHROMADB_DRIFT_ZSCORE = _get_or_create_metric(
+    Gauge,
+    "superagent_chromadb_drift_zscore",
+    "Dérive sémantique (Z-score) de la distribution des vecteurs ChromaDB"
+)
+
+CHROMADB_RETRIEVAL_SIMILARITY = _get_or_create_metric(
+    Histogram,
+    "superagent_chromadb_retrieval_similarity_score",
+    "Distribution des scores de similarité de recherche sémantique RAG",
+    buckets=(0.1, 0.3, 0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 0.99, 1.0)
+)
+
+CHROMADB_DUPLICATES_CLEANED = _get_or_create_metric(
+    Counter,
+    "superagent_chromadb_duplicates_cleaned_total",
+    "Nombre total de vecteurs doublons sémantiques supprimés"
+)
+
+# --- MÉTRIQUES CIRCUIT BREAKER (RÉSILIENCE API) ---
+CIRCUIT_BREAKER_STATE = _get_or_create_metric(
+    Gauge,
+    "superagent_circuit_breaker_state",
+    "État actuel du Circuit Breaker (0=CLOSED, 1=HALF_OPEN, 2=OPEN)",
+    labelnames=["service"]
+)
+
+CIRCUIT_BREAKER_TRIPPED = _get_or_create_metric(
+    Counter,
+    "superagent_circuit_breaker_tripped_total",
+    "Nombre total de fois où le Circuit Breaker s'est ouvert (disjoncté)",
+    labelnames=["service"]
+)
+
+
+
 
 def setup_metrics_route(app):
     """

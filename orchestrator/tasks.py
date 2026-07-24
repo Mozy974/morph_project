@@ -31,3 +31,18 @@ def task_run_analyste(rapport_precedent: dict):
 def task_run_redacteur(verdict: dict):
     agent = AgentRedacteur()
     return agent.rediger_rapport(verdict)
+
+
+@celery_app.task(name="orchestrator.tasks.task_chroma_weekly_maintenance")
+def task_chroma_weekly_maintenance(collection_name: str = "superagent_knowledge", duplicate_threshold: float = 0.98, inactive_days: int = 180):
+    """
+    Tâche hebdomadaire Celery Beat pour la maintenance prédictive de ChromaDB.
+    """
+    from orchestrator.memory.chroma_maintenance import ChromaMaintenanceManager
+    manager = ChromaMaintenanceManager()
+    return manager.run_maintenance_cycle(
+        collection_name=collection_name,
+        duplicate_threshold=duplicate_threshold,
+        inactive_days=inactive_days
+    )
+

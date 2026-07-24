@@ -258,3 +258,56 @@ def get_report(job_id: str):
         }
     finally:
         db.close()
+
+
+# --- ENDPOINTS CHROMADB PREDICTIVE MAINTENANCE ---
+@app.get("/api/v1/chroma/health")
+def get_chroma_health(collection: str = "superagent_knowledge"):
+    """
+    Retourne l'audit de santé sémantique et la dérive Z-score de la collection ChromaDB.
+    """
+    from orchestrator.memory.chroma_maintenance import ChromaMaintenanceManager
+    manager = ChromaMaintenanceManager()
+    client = manager.get_client()
+    try:
+        coll = client.get_collection(name=collection)
+        return manager.audit_health(coll)
+    except Exception as e:
+        return {"error": f"Collection '{collection}' introuvable ou inaccessible : {str(e)}"}
+
+
+@app.post("/api/v1/chroma/maintenance")
+def trigger_chroma_maintenance(
+    collection: str = "superagent_knowledge",
+    duplicate_threshold: float = 0.98,
+    inactive_days: int = 180
+):
+    """
+    Déclenche le cycle complet de maintenance prédictive pour ChromaDB.
+    """
+    from orchestrator.memory.chroma_maintenance import ChromaMaintenanceManager
+    manager = ChromaMaintenanceManager()
+    result = manager.run_maintenance_cycle(
+        collection_name=collection,
+        duplicate_threshold=duplicate_threshold,
+        inactive_days=inactive_days
+    )
+    return {"status": "SUCCESS", "details": result}
+
+
+# --- ENDPOINT CIRCUIT BREAKERS (RÉSILIENCE) ---
+@app.get("/api/v1/circuit-breakers")
+def get_circuit_breakers_status():
+    """
+    Retourne l'état en temps réel de tous les Circuit Breakers (Mistral, Tavily/Web Search).
+    """
+    from orchestrator.circuit_breaker import mistral_circuit_breaker, tavily_circuit_breaker
+    return {
+        "status": "OK",
+        "circuit_breakers": [
+            mistral_circuit_breaker.get_status(),
+            tavily_circuit_breaker.get_status()
+        ]
+    }
+
+

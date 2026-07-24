@@ -1,5 +1,5 @@
-# 🚀 Enterprise SuperAgent — Autonomous AI Engineering Framework
-
+[![Version](https://img.shields.io/badge/Version-v1.4.3--rc2-purple.svg)](README.md)
+[![Status](https://img.shields.io/badge/Status-PRODUCTION_READY-brightgreen.svg)](README.md)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.103-green.svg)](https://fastapi.tiangolo.com/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-State_Machine-purple.svg)](https://python.langchain.com/)
@@ -8,9 +8,10 @@
 [![Prometheus](https://img.shields.io/badge/Prometheus-Metrics-orange.svg)](https://prometheus.io/)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 
-An enterprise-grade autonomous AI engineering agent framework powered by **True TDD (Test-Driven Development)**, **Cryptographic SHA-256 Chain-of-Custody Seals**, **Redis Checkpointing & Resumption**, **Human-in-the-Loop (HITL) Memory Moderation**, **Real-Time SSE Streaming**, and **Prometheus/Grafana Observability**.
+An enterprise-grade autonomous AI engineering agent framework powered by **True TDD (Test-Driven Development)**, **Cryptographic SHA-256 Chain-of-Custody Seals**, **Redis Checkpointing & Resumption**, **Human-in-the-Loop (HITL) Memory Moderation**, **Real-Time SSE Streaming**, **ChromaDB Predictive Maintenance**, **Circuit Breakers**, **WebGPU Compute & WebXR VR Engine**, and **Prometheus/Grafana Observability**.
 
 ---
+
 
 ## 🏗️ System Architecture
 
@@ -56,9 +57,43 @@ graph TD
 ```
 
 
+
+---
+
+## 🔍 Architecture RAG Hybride & Production
+
+Le projet intègre une architecture **RAG (Retrieval-Augmented Generation) Hybride** découplée et de haute performance :
+
+### 1. Structure des Modules RAG
+- `rag_pipeline.py` : Logique RAG pure (ChromaDB + Mistral Embeddings, DuckDuckGo Search, Tavily Fallback, Métriques Prometheus).
+- `main.py` : API HTTP FastAPI exposant les endpoints de production `/query`, `/health`, `/metrics`.
+- `mon_assistant.py` : Interface utilisateur interactive Streamlit.
+- `benchmark_rag.py` & `locustfile.py` : Outils de benchmarking et tests de charge.
+
+### 2. Sécurité & Monitoring Prometheus
+- **Sécurisation des clés API** : Support du fichier `.env.example` et vérification de la clé `X-API-Key`.
+- **Métriques Prometheus (`/metrics`)** :
+  - `rag_queries_total{mode}` : Compteur total de requêtes par mode (`LOCAL`, `WEB`, `HYBRID`, `AUTO`).
+  - `rag_query_duration_seconds{mode}` : Histogramme des latences en secondes.
+  - `rag_search_count{source}` : Statistiques d'utilisation des sources de recherche (`chromadb`, `duckduckgo`, `tavily`).
+
+### 3. Démarrage Rapide
+
+```bash
+# 1. Copier le fichier de configuration
+cp .env.example .env
+
+# 2. Lancer l'API FastAPI en mode multi-workers (Uvicorn / Gunicorn)
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8000
+
+# 3. Lancer le benchmark de performance
+python3 benchmark_rag.py
+```
+
 ---
 
 ## 🌟 Core Architecture Features
+
 
 ### 1. True TDD with Cryptographic SHA-256 Integrity Seal
 - **Analyste (QA Test Architect)** generates an immutable test contract `test_main.py` signed with a **SHA-256 cryptographic hash**.

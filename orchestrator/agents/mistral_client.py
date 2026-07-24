@@ -9,29 +9,16 @@ import urllib.request
 from urllib.error import HTTPError, URLError
 
 
-def call_mistral(
+from orchestrator.circuit_breaker import mistral_circuit_breaker, CircuitBreakerOpenError
+
+
+def _mistral_raw_request(
     system_prompt: str,
     user_prompt: str,
     model: str = "mistral-small-latest",
     temperature: float = 0.3,
     json_mode: bool = False
 ) -> str:
-    """
-    Appelle l'API Mistral Chat Completions et retourne le contenu de la réponse.
-
-    Args:
-        system_prompt: Le prompt système qui définit le rôle de l'agent.
-        user_prompt: Le message utilisateur à envoyer.
-        model: Le modèle Mistral à utiliser.
-        temperature: Contrôle la créativité (0.0 = déterministe, 1.0 = créatif).
-        json_mode: Si True, force le modèle à répondre en JSON valide.
-
-    Returns:
-        Le contenu textuel de la réponse du modèle.
-
-    Raises:
-        RuntimeError: Si la clé API est manquante ou si l'appel échoue.
-    """
     api_key = os.environ.get("MISTRAL_API_KEY")
     if not api_key:
         raise RuntimeError(
@@ -49,7 +36,6 @@ def call_mistral(
         "temperature": temperature,
     }
 
-    # Active le mode JSON structuré si demandé
     if json_mode:
         data["response_format"] = {"type": "json_object"}
 
@@ -66,7 +52,7 @@ def call_mistral(
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=120) as response:
+        with urllib.request.urlopen(req, timeout=30) as response:
             response_data = json.loads(response.read().decode("utf-8"))
             return response_data["choices"][0]["message"]["content"]
     except HTTPError as e:
@@ -78,3 +64,42 @@ def call_mistral(
         raise RuntimeError(
             f"❌ Erreur de connexion à l'API Mistral : {e.reason}"
         ) from e
+
+
+def _mistral_fallback(
+    system_prompt: str,
+    user_prompt: str,
+    model: str = "mistral-small-latest",
+    temperature: float = 0.3,
+    json_mode: bool = False
+) -> str:
+    """Fallback exécuté si le Circuit Breaker Mistral est OPEN ou échoue."""
+    if json_mode:
+        return json.dumps({
+            "status": "FALLBACK_MODE",
+            "message": "API Mistral momentanément indisponible (Circuit Breaker Actif). Réponse dégradée du système.",
+            "data": []
+        })
+    return "⚠️ [Mode Dégradé] L'API Mistral est temporairement indisponible. Le système fonctionne en mode secours autonome."
+
+
+def call_mistral(
+    system_prompt: str,
+    user_prompt: str,
+    model: str = "mistral-small-latest",
+    temperature: float = 0.3,
+    json_mode: bool = False
+) -> str:
+    """
+    Appelle l'API Mistral Chat Completions sous le contrôle du Circuit Breaker.
+    """
+    return mistral_circuit_breaker.call(
+        _mistral_raw_request,
+        system_prompt,
+        user_prompt,
+        model=model,
+        temperature=temperature,
+        json_mode=json_mode,
+        fallback=_mistral_fallback
+    )
+

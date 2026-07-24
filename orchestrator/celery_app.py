@@ -31,4 +31,13 @@ celery_app.conf.update(
     # Empêche un worker rapide d'accaparer toutes les tâches en file d'attente.
     # Indispensable pour des tâches longues et asynchrones (LLM).
     worker_prefetch_multiplier=1,
+    # --- Tâches Périodiques (Celery Beat) ---
+    beat_schedule={
+        'chroma-weekly-maintenance': {
+            'task': 'orchestrator.tasks.task_chroma_weekly_maintenance',
+            'schedule': 604800.0,  # 7 jours en secondes
+            'kwargs': {'collection_name': 'superagent_knowledge'}
+        },
+    }
 )
+

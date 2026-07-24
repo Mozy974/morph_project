@@ -1,18 +1,7 @@
-# Fix pour ChromaDB sqlite3 sur Streamlit Cloud
-try:
-    __import__('pysqlite3')
-    import sys
-    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-except Exception:
-    pass
-
 import streamlit as st
 import os
-import glob
-import chromadb
-from mistralai import Mistral
 import datetime
-from tavily import TavilyClient
+from rag_pipeline import HybridRAGPipeline, load_documents
 
 try:
     from dotenv import load_dotenv
@@ -29,16 +18,6 @@ def get_secret(key_name):
         pass
     return os.environ.get(key_name)
 
-# Initialisation du client Tavily avec vérification robuste
-tavily_key = get_secret("TAVILY_API_KEY") or get_secret("SEARCH_API_KEY")
-tavily = None
-if tavily_key:
-    try:
-        tavily = TavilyClient(api_key=tavily_key)
-    except Exception as e:
-        print(f"⚠️ Initialisation Tavily impossible : {e}")
-        tavily = None
-
 # --- FONCTION JOURNAL ---
 def consigner_dans_journal(probleme, solution):
     date_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -46,55 +25,33 @@ def consigner_dans_journal(probleme, solution):
     with open("historique_resolutions.md", "a", encoding="utf-8") as f:
         f.write(entree)
 
-# --- CONFIGURATION ---
-st.set_page_config(page_title="Mon Assistant Personnel", page_icon="🧠")
+# --- CONFIGURATION STREAMLIT ---
+st.set_page_config(page_title="Mon Assistant Personnel RAG", page_icon="🧠")
 
-# Chargement forcé de la clé
 API_KEY = get_secret("MISTRAL_API_KEY")
+TAVILY_KEY = get_secret("TAVILY_API_KEY") or get_secret("SEARCH_API_KEY")
 
 if not API_KEY:
     st.error("❌ La clé API MISTRAL n'est pas détectée. Veuillez l'ajouter dans 'Settings > Secrets' de Streamlit Cloud ou exporter MISTRAL_API_KEY.")
     st.stop()
 
-mistral_client = Mistral(api_key=API_KEY)
 DOCS_FOLDER = "mes_documents"
 
-# --- FONCTIONS RAG ---
-def lire_fichiers_locaux(dossier):
-    documents, sources = [], []
-    if not os.path.exists(dossier): os.makedirs(dossier)
-    fichiers = glob.glob(f"{dossier}/*.txt") + glob.glob(f"{dossier}/*.md")
-    for fichier in fichiers:
-        with open(fichier, "r", encoding="utf-8") as f:
-            contenu = f.read()
-            paragraphes = [p.strip() for p in contenu.split("\n\n") if len(p.strip()) > 50]
-            for i, para in enumerate(paragraphes):
-                documents.append(para)
-                sources.append(f"{os.path.basename(fichier)} - bloc {i}")
-    return documents, sources
-
 @st.cache_resource
-def initialiser_base_vectorielle():
-    db_client = chromadb.Client()
-    try: db_client.delete_collection("base_personnelle")
-    except: pass
-    collection = db_client.create_collection(name="base_personnelle")
-    documents, sources = lire_fichiers_locaux(DOCS_FOLDER)
-    if not documents: return collection, False
-    embeddings_response = mistral_client.embeddings.create(model="mistral-embed", inputs=documents)
-    collection.add(
-        embeddings=[e.embedding for e in embeddings_response.data],
-        documents=documents,
-        metadatas=[{"source": s} for s in sources],
-        ids=[f"id_{i}" for i in range(len(documents))]
+def initialiser_pipeline_rag():
+    pipeline = HybridRAGPipeline(
+        mistral_api_key=API_KEY,
+        tavily_api_key=TAVILY_KEY,
+        docs_folder=DOCS_FOLDER
     )
-    return collection, True
+    is_indexed = pipeline.init_vector_store()
+    return pipeline, is_indexed
 
-collection_docs, base_prete = initialiser_base_vectorielle()
+rag_pipeline, base_prete = initialiser_pipeline_rag()
 
-# --- BARRE LATÉRALE : TÉLÉVERSEMENT DE DOCUMENTS ---
+# --- BARRE LATÉRALE : TÉLÉVERSEMENT DE DOCUMENTS & CONFIGURATION ---
 with st.sidebar:
-    st.header("📂 Gestion des connaissances")
+    st.header("📂 Base de connaissances RAG")
     st.write("Ajoutez de nouvelles notes pour enrichir l'assistant.")
     
     fichiers_uploades = st.file_uploader(
@@ -114,15 +71,27 @@ with st.sidebar:
                 nouveaux_fichiers = True
         
         if nouveaux_fichiers:
-            st.sidebar.info("🔄 Mise à jour de la base de connaissances...")
+            st.sidebar.info("🔄 Re-indexation de la base vectorielle...")
             st.cache_resource.clear()
             st.rerun()
 
-# --- INTERFACE ---
-st.title("🧠 Mon Assistant Personnel")
-if "messages" not in st.session_state: st.session_state.messages = []
+    st.markdown("---")
+    st.header("⚙️ Mode de recherche")
+    mode_recherche = st.selectbox(
+        "Mode RAG",
+        options=["AUTO", "HYBRID", "WEB", "LOCAL"],
+        index=0,
+        help="AUTO: Détection automatique par l'IA | HYBRID: Local + Web | WEB: DuckDuckGo/Tavily | LOCAL: ChromaDB"
+    )
+
+# --- INTERFACE PRINCIPALE ---
+st.title("🧠 Mon Assistant Personnel (RAG Hybride)")
+if "messages" not in st.session_state: 
+    st.session_state.messages = []
+
 for msg in st.session_state.messages:
-    with st.chat_message(msg["role"]): st.markdown(msg["content"])
+    with st.chat_message(msg["role"]): 
+        st.markdown(msg["content"])
 
 # --- LOGIQUE CONVERSATION ---
 if prompt := st.chat_input("Posez une question..."):
@@ -132,57 +101,43 @@ if prompt := st.chat_input("Posez une question..."):
     
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        message_placeholder.markdown("🔍 *Réflexion...*")
+        message_placeholder.markdown("🔍 *Recherche et analyse en cours...*")
         
-        # 1. Étape de décision
-        decision_prompt = f"La question suivante nécessite-t-elle une recherche sur Internet ? Réponds uniquement par 'OUI' ou 'NON'. Question : {prompt}"
-        response_decision = mistral_client.chat.complete(
-            model="mistral-small-latest", 
-            messages=[{"role": "user", "content": decision_prompt}]
+        # Exécution du requêtage hybride via rag_pipeline
+        rag_result = rag_pipeline.hybrid_query(
+            query=prompt,
+            search_mode=mode_recherche,
+            max_web_results=3,
+            n_local_results=3
         )
-        decision = response_decision.choices[0].message.content
-        
-        # 2. Exécution selon la décision
-        ctx = ""
-        if "OUI" in decision.upper():
-            if tavily:
-                try:
-                    message_placeholder.markdown("🌐 *Recherche Web activée...*")
-                    search_data = tavily.search(query=prompt, search_depth="basic")
-                    ctx = f"RÉSULTATS WEB : {search_data.get('results', [])}"
-                except Exception as e:
-                    st.warning(f"⚠️ Erreur lors de la recherche Web Tavily : {e}. Basculement en mode local.")
-                    ctx = ""
-            else:
-                st.warning("⚠️ Recherche Web demandée mais TAVILY_API_KEY non configurée dans Secrets. Basculement sur les documents locaux.")
 
-        if not ctx:
-            message_placeholder.markdown("🔍 *Analyse des documents locaux...*")
-            if base_prete:
-                prompt_emb = mistral_client.embeddings.create(model="mistral-embed", inputs=[prompt]).data[0].embedding
-                res = collection_docs.query(query_embeddings=[prompt_emb], n_results=3)
-                if res and res.get("documents") and res["documents"][0]:
-                    ctx = "\n\n".join([f"[Source: {s}]\n{c}" for s, c in zip([m["source"] for m in res["metadatas"][0]], res["documents"][0])])
-            
-            if not ctx:
-                ctx = "Aucun document spécifique trouvé dans la base locale."
+        mode_used = rag_result["mode_used"]
+        context = rag_result["context"]
 
-        # 3. Réponse finale avec sources intégrées
-        system_prompt = f"""Tu es un expert technique. Réponds à la question en utilisant ce contexte : {ctx}
-        
-        IMPORTANT : À la fin de ta réponse, liste toujours les sources utilisées sous forme de puces.
-        """
-        
-        api_messages = [{"role": "system", "content": system_prompt}] + \
-                       [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
-        
-        response = mistral_client.chat.complete(model="mistral-small-latest", messages=api_messages)
-        reponse_finale = response.choices[0].message.content
+        if mode_used == "WEB":
+            st.caption("🌐 *Recherche Web effectuée (DuckDuckGo / Tavily)*")
+        elif mode_used == "LOCAL":
+            st.caption("📄 *Consultation des documents locaux (ChromaDB)*")
+        else:
+            st.caption("🌐📄 *Recherche Hybride effectuée (Local + Web)*")
+
+        # Formatage de l'historique de conversation
+        history_formatted = [
+            {"role": m["role"], "content": m["content"]}
+            for m in st.session_state.messages[:-1]
+        ]
+
+        # Génération de la réponse
+        reponse_finale = rag_pipeline.generate_response(
+            query=prompt,
+            context=context,
+            history=history_formatted
+        )
         
         message_placeholder.markdown(reponse_finale)
         st.session_state.messages.append({"role": "assistant", "content": reponse_finale})
 
-        # Bouton sauvegarde
+        # Bouton sauvegarde journal
         if st.button("✅ Consigner dans le journal"):
             consigner_dans_journal(prompt, reponse_finale)
             st.success("Résolution sauvegardée !")

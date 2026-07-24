@@ -83,23 +83,10 @@ def _extract_results(html: str) -> List[Dict[str, str]]:
     return results
 
 
-def search_web(query: str, max_results: int = 5) -> Dict[str, Any]:
-    """
-    Effectue une recherche sur le Web via DuckDuckGo (gratuit, sans clé API).
+from orchestrator.circuit_breaker import tavily_circuit_breaker
 
-    Args:
-        query: Les termes de recherche.
-        max_results: Nombre maximal de résultats (défaut: 5, max: 10).
 
-    Returns:
-        Dictionnaire contenant les résultats :
-        {
-            "success": True/False,
-            "query": "...",
-            "results": [{"title": "...", "url": "...", "content": "..."}],
-            "error": None ou message d'erreur
-        }
-    """
+def _search_web_raw(query: str, max_results: int = 5) -> Dict[str, Any]:
     if not query or not query.strip():
         return {
             "success": False,
@@ -108,10 +95,7 @@ def search_web(query: str, max_results: int = 5) -> Dict[str, Any]:
             "error": "Requête vide.",
         }
 
-    # Limiter le nombre de résultats
     max_results = min(max_results, 10)
-
-    # Préparer la requête POST
     data = urllib.parse.urlencode({"q": query}).encode("utf-8")
     headers = {
         "User-Agent": USER_AGENT,
@@ -132,8 +116,6 @@ def search_web(query: str, max_results: int = 5) -> Dict[str, Any]:
             html = response.read().decode("utf-8", errors="replace")
 
         all_results = _extract_results(html)
-
-        # Limiter et retourner
         clean_results = [
             {
                 "title": r.get("title", "Sans titre"),
@@ -157,26 +139,34 @@ def search_web(query: str, max_results: int = 5) -> Dict[str, Any]:
             "results": clean_results,
             "error": None,
         }
-
-    except HTTPError as e:
-        error_body = e.read().decode("utf-8", errors="replace")
-        return {
-            "success": False,
-            "query": query,
-            "results": [],
-            "error": f"Erreur HTTP {e.code}: {error_body[:200]}",
-        }
-    except URLError as e:
-        return {
-            "success": False,
-            "query": query,
-            "results": [],
-            "error": f"Erreur de connexion : {e.reason}",
-        }
     except Exception as e:
-        return {
-            "success": False,
-            "query": query,
-            "results": [],
-            "error": str(e),
-        }
+        raise RuntimeError(f"Erreur recherche web: {str(e)}") from e
+
+
+def _search_web_fallback(query: str, max_results: int = 5) -> Dict[str, Any]:
+    """Fallback exécuté si la recherche web disjoncte (Circuit Breaker OPEN)."""
+    return {
+        "success": False,
+        "query": query,
+        "results": [
+            {
+                "title": "Mode Dégradé RAG Local",
+                "url": "local://chromadb_fallback",
+                "content": "Recherche web temporairement désactivée (Circuit Breaker Actif). Basculement vers la base vectorielle locale."
+            }
+        ],
+        "error": "Circuit Breaker Web Search actif - Mode dégradé."
+    }
+
+
+def search_web(query: str, max_results: int = 5) -> Dict[str, Any]:
+    """
+    Effectue une recherche Web sous le contrôle du Circuit Breaker.
+    """
+    return tavily_circuit_breaker.call(
+        _search_web_raw,
+        query,
+        max_results=max_results,
+        fallback=_search_web_fallback
+    )
+
