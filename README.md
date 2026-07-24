@@ -422,7 +422,35 @@ Le **Level 13.0** constitue le sommet absolu, définitif et l'aboutissement ulti
 
 ---
 
+## 📊 Génération Automatique de Rapports
+
+SuperAgent Morph inclut des scripts automatisés pour générer les rapports de performance (Locust HTML/CSV), les captures d'écran des dashboards Grafana et les métriques Prometheus.
+
+### 🚀 Commandes Rapides
+
+#### 1. **Génération des Rapports Complets**
+```bash
+python scripts/generate_reports.py
+```
+**Artefacts générés :**
+- Rapport Locust (HTML + CSV) dans `reports/locust_report_YYYY-MM-DD_HH-MM-SS.html`
+- Capture Grafana dans `screenshots/grafana_dashboard_YYYY-MM-DD_HH-MM-SS.png`
+- Métriques Prometheus dans `reports/prometheus_metrics_YYYY-MM-DD_HH-MM-SS.txt`
+
+#### 2. **Benchmark Locust Seul**
+```bash
+./scripts/locust_report_generator.sh
+```
+
+#### 3. **Capture Grafana Seul**
+```bash
+python scripts/grafana_screenshot.py
+```
+
+---
+
 ## 🛠️ Gestion des Imports MistralAI & Résilience
+
 
 Le framework implémente une stratégie d'import sécurisée à 2 niveaux de fallback pour garantir la compatibilité ascendante et descendante avec toutes les versions du SDK `mistralai` :
 
